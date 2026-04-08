@@ -1,0 +1,23 @@
+.module-tile {
+  background: var(--surface);
+  border-radius: 16px;
+  padding: 18px 12px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 2px 10px rgba(44,95,122,0.09);
+  cursor: pointer;
+  border: none;
+  border-bottom: 3px solid transparent;
+  text-decoration: none;
+  color: var(--text);
+  min-height: 90px;
+  width: 100%;
+}
+.module-tile .tile-icon { font-size: 28px; }
+.module-tile .tile-label { font-size: 13px; font-weight: 700; text-align: center; line-height: 1.2; }
+.band-blue  { border-bottom-color: var(--band-blue); }
+.band-green { border-bottom-color: var(--band-green); }
+.band-amber { border-bottom-color: var(--band-amber); }
+.band-teal  { border-bottom-color: var(--band-teal); }
