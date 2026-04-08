@@ -38,6 +38,7 @@
 | `js/modules/birthdays.js` | Birthday CRUD, email greeting |
 | `js/modules/pets.js` | Pet CRUD, feeding checklist, vet notes |
 | `js/modules/settings.js` | Module toggles, font size, theme, profile edit, export, reset |
+| `js/modules/settings.js` | Module toggles, font size, theme, profile edit, export, reset |
 
 ---
 
@@ -322,10 +323,24 @@ const Seed = {
     { id:'p7', item:'Juice', have:true },
     { id:'p8', item:'Coffee/Tea', have:true },
   ],
+  foodLinks: [
+    { id:'fl1', label:'DoorDash',        url:'https://www.doordash.com' },
+    { id:'fl2', label:'Instacart',       url:'https://www.instacart.com' },
+    { id:'fl3', label:'Grubhub',         url:'https://www.grubhub.com' },
+    { id:'fl4', label:'Meals on Wheels', url:'https://www.mealsonwheelsamerica.org' },
+  ],
+  wellnessLinks: [
+    { id:'wl1', label:'Insight Timer', url:'https://insighttimer.com' },
+    { id:'wl2', label:'Calm',          url:'https://www.calm.com' },
+    { id:'wl3', label:'Libby / OverDrive', url:'https://libbyapp.com' },
+    { id:'wl4', label:'Audible',       url:'https://www.audible.com' },
+  ],
   apply() {
-    if (!Storage.get('ng_helplines')) Storage.set('ng_helplines', this.helplines);
-    if (!Storage.get('ng_recipes'))   Storage.set('ng_recipes',   this.recipes);
-    if (!Storage.get('ng_pantry'))    Storage.set('ng_pantry',    this.pantry);
+    if (!Storage.get('ng_helplines'))     Storage.set('ng_helplines',     this.helplines);
+    if (!Storage.get('ng_recipes'))       Storage.set('ng_recipes',       this.recipes);
+    if (!Storage.get('ng_pantry'))        Storage.set('ng_pantry',        this.pantry);
+    if (!Storage.get('ng_food_links'))    Storage.set('ng_food_links',    this.foodLinks);
+    if (!Storage.get('ng_wellness_links'))Storage.set('ng_wellness_links',this.wellnessLinks);
   }
 };
 ```

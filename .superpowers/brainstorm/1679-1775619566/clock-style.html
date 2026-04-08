@@ -1,0 +1,71 @@
+<h2>Which clock style for the home screen?</h2>
+<p class="subtitle">This is the first thing users see every morning — it should feel comforting and easy to read</p>
+
+<div class="cards">
+
+  <div class="card" data-choice="digital-bold" onclick="toggleSelect(this)">
+    <div class="card-image" style="background: linear-gradient(135deg, #e8f4f8 0%, #f5f0e8 100%); padding: 32px 24px; min-height: 200px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;">
+      <div style="font-size: 64px; font-weight: 800; color: #2c5f7a; font-family: 'Georgia', serif; letter-spacing: -2px; line-height: 1;">9:42</div>
+      <div style="font-size: 20px; font-weight: 400; color: #2c5f7a; letter-spacing: 2px; font-family: Georgia, serif;">AM</div>
+      <div style="font-size: 20px; color: #4a7c59; font-weight: 600; margin-top: 4px;">Tuesday</div>
+      <div style="font-size: 17px; color: #6b6b6b;">April 7, 2026</div>
+    </div>
+    <div class="card-body">
+      <h3>A — Bold Digital</h3>
+      <p>Large serif numerals. Maximum readability at a glance. Elegant, like a luxury bedside clock. Best for low vision.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="analog" onclick="toggleSelect(this)">
+    <div class="card-image" style="background: linear-gradient(135deg, #e8f4f8 0%, #f5f0e8 100%); padding: 24px; min-height: 200px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px;">
+      <svg width="130" height="130" viewBox="0 0 130 130">
+        <circle cx="65" cy="65" r="62" fill="white" stroke="#2c5f7a" stroke-width="3"/>
+        <circle cx="65" cy="65" r="4" fill="#2c5f7a"/>
+        <!-- Hour marks -->
+        <line x1="65" y1="10" x2="65" y2="20" stroke="#2c5f7a" stroke-width="2.5"/>
+        <line x1="65" y1="110" x2="65" y2="120" stroke="#2c5f7a" stroke-width="2.5"/>
+        <line x1="10" y1="65" x2="20" y2="65" stroke="#2c5f7a" stroke-width="2.5"/>
+        <line x1="110" y1="65" x2="120" y2="65" stroke="#2c5f7a" stroke-width="2.5"/>
+        <!-- Diagonal marks -->
+        <line x1="26" y1="26" x2="33" y2="33" stroke="#2c5f7a" stroke-width="1.5"/>
+        <line x1="97" y1="26" x2="104" y2="33" stroke="#2c5f7a" stroke-width="1.5" transform="rotate(90 65 65)"/>
+        <line x1="26" y1="26" x2="33" y2="33" stroke="#2c5f7a" stroke-width="1.5" transform="rotate(180 65 65)"/>
+        <line x1="26" y1="26" x2="33" y2="33" stroke="#2c5f7a" stroke-width="1.5" transform="rotate(270 65 65)"/>
+        <!-- Hour hand ~9 o'clock -->
+        <line x1="65" y1="65" x2="28" y2="65" stroke="#2c5f7a" stroke-width="4" stroke-linecap="round"/>
+        <!-- Minute hand ~42 min -->
+        <line x1="65" y1="65" x2="65" y2="18" stroke="#2c5f7a" stroke-width="2.5" stroke-linecap="round" transform="rotate(252 65 65)"/>
+        <!-- Second hand -->
+        <line x1="65" y1="65" x2="65" y2="14" stroke="#4a7c59" stroke-width="1.5" stroke-linecap="round" transform="rotate(180 65 65)"/>
+      </svg>
+      <div style="font-size: 15px; color: #6b6b6b;">Tuesday · April 7, 2026</div>
+    </div>
+    <div class="card-body">
+      <h3>B — Analog Clock</h3>
+      <p>Classic clock face with clean hands. Familiar and calming — like the clock on the wall. Date shown below.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="hybrid" onclick="toggleSelect(this)">
+    <div class="card-image" style="background: linear-gradient(135deg, #e8f4f8 0%, #f5f0e8 100%); padding: 24px; min-height: 200px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;">
+      <svg width="100" height="100" viewBox="0 0 130 130">
+        <circle cx="65" cy="65" r="62" fill="white" stroke="#2c5f7a" stroke-width="3"/>
+        <circle cx="65" cy="65" r="4" fill="#2c5f7a"/>
+        <line x1="65" y1="10" x2="65" y2="20" stroke="#2c5f7a" stroke-width="2.5"/>
+        <line x1="65" y1="110" x2="65" y2="120" stroke="#2c5f7a" stroke-width="2.5"/>
+        <line x1="10" y1="65" x2="20" y2="65" stroke="#2c5f7a" stroke-width="2.5"/>
+        <line x1="110" y1="65" x2="120" y2="65" stroke="#2c5f7a" stroke-width="2.5"/>
+        <line x1="65" y1="65" x2="28" y2="65" stroke="#2c5f7a" stroke-width="4" stroke-linecap="round"/>
+        <line x1="65" y1="65" x2="65" y2="18" stroke="#2c5f7a" stroke-width="2.5" stroke-linecap="round" transform="rotate(252 65 65)"/>
+        <line x1="65" y1="65" x2="65" y2="14" stroke="#4a7c59" stroke-width="1.5" stroke-linecap="round" transform="rotate(180 65 65)"/>
+      </svg>
+      <div style="font-size: 42px; font-weight: 700; color: #2c5f7a; font-family: Georgia, serif; line-height: 1; margin-top: -4px;">9:42 <span style="font-size: 22px;">AM</span></div>
+      <div style="font-size: 16px; color: #4a7c59; font-weight: 600;">Tuesday · April 7, 2026</div>
+    </div>
+    <div class="card-body">
+      <h3>C — Analog + Digital Hybrid</h3>
+      <p>Analog face above, large digital readout below. Both visual styles together — beautiful and unambiguous.</p>
+    </div>
+  </div>
+
+</div>

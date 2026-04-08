@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NeuroGateway — Home Screen Mockup</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f0ece4;
+    min-height: 100vh;
+    color: #2a2a2a;
+  }
+
+  /* Top bar */
+  .topbar {
+    background: #2c5f7a;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    height: 56px;
+  }
+  .topbar-title {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+  .topbar-ice {
+    background: #e05c1a;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    letter-spacing: 0.3px;
+  }
+  .topbar-settings {
+    background: rgba(255,255,255,0.15);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 15px;
+    cursor: pointer;
+  }
+  .topbar-right { display: flex; gap: 10px; }
+
+  /* Clock card */
+  .clock-card {
+    background: linear-gradient(145deg, #ffffff, #f5f0e8);
+    margin: 20px 20px 12px;
+    border-radius: 20px;
+    padding: 32px 28px 24px;
+    box-shadow: 0 4px 20px rgba(44,95,122,0.12);
+    border-left: 6px solid #2c5f7a;
+  }
+  .clock-time {
+    font-size: 80px;
+    font-weight: 800;
+    color: #2c5f7a;
+    font-family: Georgia, serif;
+    line-height: 1;
+    letter-spacing: -2px;
+  }
+  .clock-ampm {
+    font-size: 28px;
+    font-weight: 400;
+    color: #2c5f7a;
+    font-family: Georgia, serif;
+    margin-left: 6px;
+    vertical-align: super;
+  }
+  .clock-day {
+    font-size: 26px;
+    color: #4a7c59;
+    font-weight: 700;
+    margin-top: 6px;
+  }
+  .clock-date {
+    font-size: 19px;
+    color: #666;
+    margin-top: 2px;
+  }
+  .greeting {
+    font-size: 22px;
+    color: #2c5f7a;
+    font-weight: 600;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid #e0ddd6;
+  }
+
+  /* Status row */
+  .status-row {
+    display: flex;
+    gap: 10px;
+    margin: 0 20px 16px;
+    flex-wrap: wrap;
+  }
+  .status-pill {
+    padding: 10px 16px;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex: 1;
+    min-width: 160px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  .status-ok { background: #e8f5e9; color: #2e6b3e; border: 1.5px solid #a5d6a7; }
+  .status-warn { background: #fff3e0; color: #b45309; border: 1.5px solid #ffcc80; }
+  .status-info { background: #e3f2fd; color: #1a5276; border: 1.5px solid #90caf9; }
+
+  /* Section label */
+  .section-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0 20px 10px;
+  }
+
+  /* Module grid */
+  .module-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    padding: 0 20px 30px;
+  }
+  .module-tile {
+    background: white;
+    border-radius: 16px;
+    padding: 18px 12px 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 2px 10px rgba(44,95,122,0.09);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: transform 0.15s, box-shadow 0.15s;
+    min-height: 90px;
+  }
+  .module-tile:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(44,95,122,0.16); }
+  .module-tile.blue { border-bottom-color: #2c5f7a; }
+  .module-tile.green { border-bottom-color: #4a7c59; }
+  .module-tile.amber { border-bottom-color: #c07830; }
+  .module-tile.teal { border-bottom-color: #2a8a8a; }
+  .tile-icon { font-size: 28px; }
+  .tile-label { font-size: 13px; font-weight: 700; color: #2a2a2a; text-align: center; line-height: 1.2; }
+
+  .mockup-label {
+    text-align: center;
+    padding: 12px;
+    font-size: 13px;
+    color: #999;
+    background: #f9f6f0;
+    border-top: 1px solid #e8e4dc;
+  }
+</style>
+</head>
+<body>
+
+<!-- Top navigation bar -->
+<div class="topbar">
+  <span class="topbar-title">NeuroGateway</span>
+  <div class="topbar-right">
+    <button class="topbar-ice">🚨 ICE Contacts</button>
+    <button class="topbar-settings">⚙ Settings</button>
+  </div>
+</div>
+
+<!-- Clock card -->
+<div class="clock-card">
+  <div>
+    <span class="clock-time">9:42</span>
+    <span class="clock-ampm">AM</span>
+  </div>
+  <div class="clock-day">Tuesday</div>
+  <div class="clock-date">April 7, 2026</div>
+  <div class="greeting">Good morning, Margaret ☀️</div>
+</div>
+
+<!-- Status row -->
+<div class="status-row">
+  <div class="status-pill status-ok">✓ Morning pills taken</div>
+  <div class="status-pill status-info">📅 Dr. Okafor · Thu 2:00 PM</div>
+  <div class="status-pill status-warn">🎂 Mom's birthday in 2 days</div>
+</div>
+
+<!-- Module grid -->
+<div class="section-label">My Modules</div>
+<div class="module-grid">
+  <div class="module-tile blue"><span class="tile-icon">💊</span><span class="tile-label">Medications</span></div>
+  <div class="module-tile blue"><span class="tile-icon">📅</span><span class="tile-label">Calendar</span></div>
+  <div class="module-tile blue"><span class="tile-icon">👤</span><span class="tile-label">ICE Contacts</span></div>
+  <div class="module-tile green"><span class="tile-icon">🧩</span><span class="tile-label">Brain Puzzles</span></div>
+  <div class="module-tile green"><span class="tile-icon">🌿</span><span class="tile-label">Calm & Wellness</span></div>
+  <div class="module-tile green"><span class="tile-icon">📝</span><span class="tile-label">Doctor's Notes</span></div>
+  <div class="module-tile amber"><span class="tile-icon">🛒</span><span class="tile-label">Food & Grocery</span></div>
+  <div class="module-tile amber"><span class="tile-icon">💳</span><span class="tile-label">Bills & Banking</span></div>
+  <div class="module-tile amber"><span class="tile-icon">🔑</span><span class="tile-label">Passwords</span></div>
+  <div class="module-tile teal"><span class="tile-icon">🚗</span><span class="tile-label">Transportation</span></div>
+  <div class="module-tile teal"><span class="tile-icon">🏘️</span><span class="tile-label">Community</span></div>
+  <div class="module-tile teal"><span class="tile-icon">📞</span><span class="tile-label">Helplines</span></div>
+  <div class="module-tile green"><span class="tile-icon">🎂</span><span class="tile-label">Birthdays</span></div>
+  <div class="module-tile amber"><span class="tile-icon">🐾</span><span class="tile-label">Pet Care</span></div>
+  <div class="module-tile blue"><span class="tile-icon">🍳</span><span class="tile-label">Recipe Book</span></div>
+</div>
+
+<div class="mockup-label">Home screen mockup · NeuroGateway · Morning Calm theme · Bold digital clock</div>
+
+</body>
+</html>
