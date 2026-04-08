@@ -28,11 +28,20 @@ function getGreeting() {
 }
 
 function init() {
-  const profile = Storage.get('ng_profile');
+  let profile = Storage.get('ng_profile');
   if (!profile) {
-    showSection('onboarding');
-    if (typeof render_onboarding === 'function') render_onboarding();
-    return;
+    profile = {
+      name: 'Richard',
+      diagnosis: '',
+      pin: null,
+      theme: 'light',
+      fontSize: 'medium',
+      enabledModules: ['medications','calendar','ice-contacts','helplines','doctors-notes',
+        'passwords','food','bills','puzzles','wellness','recipes','transportation',
+        'community','birthdays','pets']
+    };
+    Storage.set('ng_profile', profile);
+    Seed.apply();
   }
   document.documentElement.setAttribute('data-theme', profile.theme || 'light');
   document.documentElement.setAttribute('data-fontsize', profile.fontSize || 'medium');
