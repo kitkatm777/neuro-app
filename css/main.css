@@ -1,0 +1,204 @@
+:root {
+  --bg: #f0ece4;
+  --surface: #ffffff;
+  --primary: #2c5f7a;
+  --secondary: #4a7c59;
+  --accent: #c07830;
+  --teal: #2a8a8a;
+  --text: #2a2a2a;
+  --text-muted: #666666;
+  --border: #e0ddd6;
+  --band-blue: #2c5f7a;
+  --band-green: #4a7c59;
+  --band-amber: #c07830;
+  --band-teal: #2a8a8a;
+  --font-base: 18px;
+  --radius: 16px;
+  --focus: 3px solid #2c5f7a;
+}
+
+[data-theme="dark"] {
+  --bg: #0f1d2e;
+  --surface: #1a2f45;
+  --text: #e8d5a3;
+  --text-muted: #a0b8c8;
+  --border: #2a4560;
+}
+
+[data-theme="high-contrast"] {
+  --bg: #000000;
+  --surface: #111111;
+  --text: #ffffff;
+  --text-muted: #cccccc;
+  --primary: #ffff00;
+  --border: #ffffff;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: var(--font-base);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* Font size variants */
+[data-fontsize="large"]  { --font-base: 22px; }
+[data-fontsize="xl"]     { --font-base: 26px; }
+
+/* Skip link */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 0;
+  background: var(--primary);
+  color: white;
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: 700;
+  z-index: 9999;
+}
+.skip-link:focus { top: 0; }
+
+/* Focus visible */
+:focus-visible { outline: var(--focus); outline-offset: 3px; }
+
+/* Top bar */
+.topbar {
+  background: var(--primary);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  height: 56px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.topbar-title { font-size: 20px; font-weight: 700; }
+.topbar-right { display: flex; gap: 10px; }
+.btn-ice {
+  background: #e05c1a;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 18px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  min-height: 48px;
+}
+.btn-settings {
+  background: rgba(255,255,255,0.15);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 15px;
+  cursor: pointer;
+  min-height: 48px;
+}
+
+/* Sections */
+section { display: none; padding-bottom: 40px; }
+section.active { display: block; }
+
+/* Cards */
+.card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 24px;
+  box-shadow: 0 2px 12px rgba(44,95,122,0.10);
+  margin: 16px 20px;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-size: var(--font-base);
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  min-height: 48px;
+  min-width: 48px;
+}
+.btn-primary { background: var(--primary); color: white; }
+.btn-secondary { background: var(--secondary); color: white; }
+.btn-ghost { background: transparent; border: 2px solid var(--primary); color: var(--primary); }
+.btn-danger { background: #c0392b; color: white; }
+
+/* Form inputs */
+label { display: block; font-weight: 600; margin-bottom: 6px; font-size: var(--font-base); }
+input, textarea, select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  font-size: var(--font-base);
+  background: var(--surface);
+  color: var(--text);
+  margin-bottom: 16px;
+  min-height: 48px;
+}
+input:focus, textarea:focus, select:focus {
+  outline: var(--focus);
+  border-color: var(--primary);
+}
+
+/* Module heading */
+.module-heading {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--primary);
+  padding: 24px 20px 8px;
+}
+
+/* Back button */
+.btn-back {
+  margin: 16px 20px 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  color: var(--primary);
+  font-size: var(--font-base);
+  font-weight: 600;
+  cursor: pointer;
+  padding: 8px 0;
+}
+
+/* Tap-target minimum */
+button, a[role="button"], .module-tile { min-height: 48px; min-width: 48px; }
+
+/* Status pills */
+.status-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  border: 1.5px solid transparent;
+  flex: 1;
+  min-width: 160px;
+}
+.pill-ok     { background: #e8f5e9; color: #2e6b3e; border-color: #a5d6a7; }
+.pill-warn   { background: #fff3e0; color: #b45309; border-color: #ffcc80; }
+.pill-info   { background: #e3f2fd; color: #1a5276; border-color: #90caf9; }
+.pill-alert  { background: #fce4ec; color: #b71c1c; border-color: #ef9a9a; }
+
+/* Reduced motion */
+@media (prefers-reduced-motion: no-preference) {
+  .module-tile { transition: transform 0.15s, box-shadow 0.15s; }
+  .module-tile:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(44,95,122,0.16); }
+}
