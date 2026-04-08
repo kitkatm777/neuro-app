@@ -22,7 +22,33 @@
 
   <main id="main-content">
 
-    <section id="onboarding"><!-- filled in Task 3 --></section>
+    <section id="onboarding">
+      <div class="card" style="margin:40px 20px;max-width:540px">
+        <div id="onboarding-step-1">
+          <h2 style="font-size:28px;color:var(--primary);margin-bottom:8px">Welcome to NeuroGateway</h2>
+          <p style="color:var(--text-muted);margin-bottom:24px">Your personal daily life hub. Let's get you set up.</p>
+          <label for="ob-name">Your name</label>
+          <input id="ob-name" type="text" placeholder="e.g. Richard" autocomplete="given-name">
+          <label for="ob-diagnosis">Condition (optional)</label>
+          <input id="ob-diagnosis" type="text" placeholder="e.g. Parkinson's disease">
+          <button class="btn btn-primary" id="ob-next-1" style="width:100%">Next →</button>
+        </div>
+        <div id="onboarding-step-2" style="display:none">
+          <h2 style="font-size:24px;color:var(--primary);margin-bottom:8px">Choose your modules</h2>
+          <p style="color:var(--text-muted);margin-bottom:16px">You can change these anytime in Settings.</p>
+          <div id="ob-module-list" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px"></div>
+          <button class="btn btn-primary" id="ob-next-2" style="width:100%">Next →</button>
+        </div>
+        <div id="onboarding-step-3" style="display:none">
+          <h2 style="font-size:24px;color:var(--primary);margin-bottom:8px">Set a PIN for Passwords</h2>
+          <p style="color:var(--text-muted);margin-bottom:16px">4-digit PIN to protect your saved passwords.</p>
+          <label for="ob-pin">4-digit PIN</label>
+          <input id="ob-pin" type="password" maxlength="4" inputmode="numeric" placeholder="••••">
+          <button class="btn btn-primary" id="ob-finish" style="width:100%">Get Started</button>
+          <button class="btn btn-ghost" id="ob-skip-pin" style="width:100%;margin-top:8px">Skip — I won't use Passwords</button>
+        </div>
+      </div>
+    </section>
 
     <section id="home">
       <div class="card" style="margin:20px;border-left:6px solid var(--primary)">
@@ -43,6 +69,7 @@
   <script src="js/storage.js"></script>
   <script src="js/seed.js"></script>
   <script src="js/clock.js"></script>
+  <script src="js/modules/onboarding.js"></script>
   <!-- module scripts added in subsequent tasks -->
   <script src="js/app.js"></script>
 </body>
