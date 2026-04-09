@@ -1,162 +1,74 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 200" role="img" aria-label="Riley — Your Daily Life Hub">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 180" role="img" aria-label="Riley — Your Daily Life Hub">
   <defs>
-    <style>
-      .dog-fill   { fill: #F5C040; }
-      .dog-dark   { fill: #1A0A00; }
-      .dog-mid    { fill: #E29018; }
-      .dog-light  { fill: #FAD860; }
-      .dog-pink   { fill: #E05878; }
-      .dog-stroke { fill: none; stroke: #1A0A00; stroke-linecap: round; stroke-linejoin: round; }
-      .dog-white  { fill: #ffffff; }
-    </style>
-    <clipPath id="circleClip">
-      <circle cx="100" cy="100" r="98"/>
-    </clipPath>
+    <!-- Remove white background + colorize to golden -->
+    <filter id="makeGold" color-interpolation-filters="sRGB" x="0%" y="0%" width="100%" height="100%">
+      <!-- Step 1: invert so black lines become white, white bg becomes black -->
+      <feComponentTransfer result="inverted">
+        <feFuncR type="linear" slope="-1" intercept="1"/>
+        <feFuncG type="linear" slope="-1" intercept="1"/>
+        <feFuncB type="linear" slope="-1" intercept="1"/>
+      </feComponentTransfer>
+      <!-- Step 2: use the luminance as alpha (white lines = opaque, black bg = transparent) -->
+      <feColorMatrix type="matrix" result="alphaFromLuma"
+        values="0 0 0 0 0.933
+                0 0 0 0 0.627
+                0 0 0 0 0.094
+                0.2126 0.7152 0.0722 0 0"/>
+      <!-- Step 3: flood the golden colour -->
+      <feFlood flood-color="#E8A018" result="goldFlood"/>
+      <!-- Step 4: apply alpha mask so only the dog lines show in gold -->
+      <feComposite in="goldFlood" in2="alphaFromLuma" operator="in"/>
+    </filter>
+
+    <!-- Soft drop shadow for badge -->
+    <filter id="badgeShadow" x="-8%" y="-8%" width="116%" height="116%">
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#00000030"/>
+    </filter>
   </defs>
 
-  <!-- ═══════════════════════════════════════════════
-       GREEN BADGE CIRCLE
-  ═══════════════════════════════════════════════ -->
-  <circle cx="100" cy="100" r="98" fill="#1a5c38"/>
-  <circle cx="100" cy="100" r="93" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="2"/>
+  <!-- ── GREEN CIRCLE BADGE ────────────────────────── -->
+  <circle cx="90" cy="90" r="88" fill="#1a5c38" filter="url(#badgeShadow)"/>
+  <!-- Subtle inner glow ring -->
+  <circle cx="90" cy="90" r="83" fill="none" stroke="rgba(255,255,255,0.13)" stroke-width="2"/>
 
-  <!-- ═══════════════════════════════════════════════
-       DOG — peeking from ledge inside badge
-  ═══════════════════════════════════════════════ -->
-  <g clip-path="url(#circleClip)">
+  <!-- ── DOG IMAGE — white bg removed, rendered gold ─ -->
+  <!--  Clip to circle so it stays inside the badge     -->
+  <clipPath id="badgeClip">
+    <circle cx="90" cy="90" r="83"/>
+  </clipPath>
+  <image
+    href="DOGLOGO.png"
+    x="5" y="8"
+    width="170" height="164"
+    clip-path="url(#badgeClip)"
+    filter="url(#makeGold)"
+    image-rendering="crisp-edges"/>
 
-    <!-- LEDGE -->
-    <rect x="2" y="148" width="196" height="60" fill="#154d30"/>
-    <rect x="2" y="148" width="196" height="8"  fill="#0d3320"/>
-
-    <!-- LEFT PAW on ledge -->
-    <rect x="20" y="134" width="44" height="22" rx="10" class="dog-fill"/>
-    <!-- Toe lines -->
-    <line x1="32" y1="134" x2="32" y2="148" stroke="#C07010" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
-    <line x1="42" y1="132" x2="42" y2="148" stroke="#C07010" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
-    <line x1="52" y1="134" x2="52" y2="148" stroke="#C07010" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
-    <!-- Paw outline -->
-    <rect x="20" y="134" width="44" height="22" rx="10" fill="none" stroke="#C07010" stroke-width="1.5" opacity="0.5"/>
-
-    <!-- RIGHT PAW on ledge -->
-    <rect x="134" y="134" width="44" height="22" rx="10" class="dog-fill"/>
-    <line x1="146" y1="134" x2="146" y2="148" stroke="#C07010" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
-    <line x1="156" y1="132" x2="156" y2="148" stroke="#C07010" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
-    <line x1="166" y1="134" x2="166" y2="148" stroke="#C07010" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
-    <rect x="134" y="134" width="44" height="22" rx="10" fill="none" stroke="#C07010" stroke-width="1.5" opacity="0.5"/>
-
-    <!-- LEFT EAR (behind head) -->
-    <path d="M 30 100
-             C 14 108, 8 125, 10 145
-             C 12 160, 22 168, 32 160
-             C 42 152, 40 128, 38 108 Z"
-          class="dog-mid"/>
-    <!-- Ear inner shading -->
-    <path d="M 34 108 C 22 116,18 132,20 148 C 22 158,28 162,32 156 C 36 148,36 128,36 112 Z"
-          fill="#C07010" opacity="0.4"/>
-    <!-- Ear fur lines -->
-    <path d="M 20 118 Q 28 122 32 130" class="dog-stroke" stroke-width="1.2" opacity="0.4"/>
-    <path d="M 16 130 Q 24 134 26 144" class="dog-stroke" stroke-width="1.2" opacity="0.4"/>
-
-    <!-- RIGHT EAR (behind head) -->
-    <path d="M 170 100
-             C 186 108, 192 125, 190 145
-             C 188 160, 178 168, 168 160
-             C 158 152, 160 128, 162 108 Z"
-          class="dog-mid"/>
-    <path d="M 166 108 C 178 116,182 132,180 148 C 178 158,172 162,168 156 C 164 148,164 128,164 112 Z"
-          fill="#C07010" opacity="0.4"/>
-    <path d="M 180 118 Q 172 122 168 130" class="dog-stroke" stroke-width="1.2" opacity="0.4"/>
-    <path d="M 184 130 Q 176 134 174 144" class="dog-stroke" stroke-width="1.2" opacity="0.4"/>
-
-    <!-- HEAD -->
-    <ellipse cx="100" cy="100" rx="64" ry="60" fill="#E8A020"/>
-
-    <!-- Forehead highlight -->
-    <ellipse cx="100" cy="70" rx="28" ry="14" fill="#F5C040" opacity="0.5"/>
-
-    <!-- Fur wisps on top of head -->
-    <path d="M 84 42 Q 88 34 94 40"  class="dog-stroke" stroke-width="2.5" opacity="0.55"/>
-    <path d="M 96 38 Q 100 28 106 36" class="dog-stroke" stroke-width="2.5" opacity="0.55"/>
-    <path d="M 108 42 Q 114 34 118 42" class="dog-stroke" stroke-width="2.5" opacity="0.55"/>
-
-    <!-- MUZZLE -->
-    <ellipse cx="100" cy="122" rx="36" ry="28" fill="#F0B030"/>
-    <!-- Muzzle fur texture -->
-    <path d="M 80 115 Q 100 110 120 115" class="dog-stroke" stroke-width="1" opacity="0.25"/>
-
-    <!-- NOSE -->
-    <ellipse cx="100" cy="113" rx="18" ry="12" class="dog-dark"/>
-    <!-- Nose bridge -->
-    <path d="M 100 100 L 100 108" class="dog-stroke" stroke="#E8A020" stroke-width="1.5" opacity="0.4"/>
-    <!-- Nose highlight -->
-    <ellipse cx="94" cy="109" rx="5" ry="3.5" fill="rgba(255,255,255,0.28)"/>
-    <!-- Nostrils -->
-    <circle cx="91"  cy="115" r="3.5" fill="#0A0400" opacity="0.7"/>
-    <circle cx="109" cy="115" r="3.5" fill="#0A0400" opacity="0.7"/>
-
-    <!-- SMILE -->
-    <path d="M 78 130 Q 100 142 122 130" class="dog-stroke" stroke-width="2.5"/>
-
-    <!-- TONGUE -->
-    <ellipse cx="100" cy="140" rx="13" ry="10" class="dog-pink"/>
-    <path d="M 100 130 L 100 150" stroke="#C03860" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
-    <ellipse cx="96" cy="136" rx="4" ry="3" fill="rgba(255,255,255,0.25)"/>
-
-    <!-- LEFT EYE -->
-    <circle cx="74"  cy="90" r="18" fill="#ffffff"/>
-    <circle cx="74"  cy="90" r="18" fill="none" stroke="#C07010" stroke-width="1.5" opacity="0.4"/>
-    <!-- Iris -->
-    <circle cx="74"  cy="90" r="13" fill="#3D1A00"/>
-    <!-- Pupil -->
-    <circle cx="74"  cy="90" r="8"  class="dog-dark"/>
-    <!-- Main shine -->
-    <circle cx="79"  cy="84" r="5"  class="dog-white"/>
-    <!-- Small shine -->
-    <circle cx="69"  cy="96" r="2"  fill="rgba(255,255,255,0.5)"/>
-    <!-- Eyebrow tuft -->
-    <path d="M 58 72 Q 74 66 90 72" class="dog-stroke" stroke-width="2.5" opacity="0.5"/>
-
-    <!-- RIGHT EYE -->
-    <circle cx="126" cy="90" r="18" fill="#ffffff"/>
-    <circle cx="126" cy="90" r="18" fill="none" stroke="#C07010" stroke-width="1.5" opacity="0.4"/>
-    <circle cx="126" cy="90" r="13" fill="#3D1A00"/>
-    <circle cx="126" cy="90" r="8"  class="dog-dark"/>
-    <circle cx="131" cy="84" r="5"  class="dog-white"/>
-    <circle cx="121" cy="96" r="2"  fill="rgba(255,255,255,0.5)"/>
-    <!-- Eyebrow tuft -->
-    <path d="M 110 72 Q 126 66 142 72" class="dog-stroke" stroke-width="2.5" opacity="0.5"/>
-
-  </g><!-- end clip -->
-
-  <!-- ═══════════════════════════════════════════════
-       WORDMARK — right of badge
-  ═══════════════════════════════════════════════ -->
-
-  <!-- "Riley" -->
-  <text x="220" y="92"
+  <!-- ── WORDMARK ───────────────────────────────────── -->
+  <!-- "Riley" in brand green -->
+  <text x="202" y="86"
         font-family="'Atkinson Hyperlegible', 'Segoe UI', Arial, sans-serif"
-        font-size="72"
+        font-size="74"
         font-weight="700"
         fill="#1a5c38"
         letter-spacing="-1.5">Riley</text>
 
   <!-- Tagline -->
-  <text x="224" y="120"
+  <text x="206" y="116"
         font-family="'Atkinson Hyperlegible', 'Segoe UI', Arial, sans-serif"
-        font-size="18"
+        font-size="19"
         font-weight="400"
         fill="#557055"
-        letter-spacing="0.8">Your Daily Life Hub</text>
+        letter-spacing="0.6">Your Daily Life Hub</text>
 
   <!-- Green underline accent -->
-  <rect x="224" y="128" width="284" height="3" rx="1.5" fill="#c8e6ce"/>
+  <rect x="206" y="125" width="300" height="3.5" rx="1.75" fill="#c8e6ce"/>
 
-  <!-- Paw print decoration beside tagline (optional flourish) -->
-  <g transform="translate(473, 105)" opacity="0.35">
-    <ellipse cx="0"   cy="0"   rx="5" ry="5.5" fill="#1a5c38"/>
-    <ellipse cx="-8"  cy="-6"  rx="3.5" ry="3" fill="#1a5c38"/>
-    <ellipse cx="0"   cy="-8"  rx="3.5" ry="3" fill="#1a5c38"/>
-    <ellipse cx="8"   cy="-6"  rx="3.5" ry="3" fill="#1a5c38"/>
+  <!-- Paw print flourish -->
+  <g transform="translate(468,100)" opacity="0.3" fill="#1a5c38">
+    <ellipse cx="0"  cy="0"  rx="5.5" ry="6"/>
+    <ellipse cx="-9" cy="-7" rx="3.5" ry="3"/>
+    <ellipse cx="0"  cy="-9" rx="3.5" ry="3"/>
+    <ellipse cx="9"  cy="-7" rx="3.5" ry="3"/>
   </g>
 </svg>
