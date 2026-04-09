@@ -212,8 +212,35 @@ a { color: inherit; }
   border-top-color: var(--primary);
   background: #f0f7f0;
 }
-.bnav-icon { font-size: 26px; line-height: 1; }
+.bnav-icon { width: 28px; height: 28px; flex-shrink: 0; }
 .bnav-label { font-size: 13px; font-weight: 700; line-height: 1.2; text-align: center; }
+.bnav-item.active .bnav-icon { stroke: var(--primary); }
+
+/* =====================================================
+   QUICK SHORTCUTS (Home screen)
+   ===================================================== */
+.shortcut-row {
+  display: flex;
+  gap: 10px;
+  padding: 4px 16px 20px;
+  flex-wrap: wrap;
+}
+.shortcut-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: 50px;
+  padding: 14px 22px;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--primary);
+  text-decoration: none;
+  box-shadow: 0 2px 6px rgba(26,92,56,0.10);
+  white-space: nowrap;
+}
+.shortcut-chip:active { background: #f0f7f0; }
 
 /* =====================================================
    SECTIONS

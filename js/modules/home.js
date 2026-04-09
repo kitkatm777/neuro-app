@@ -7,6 +7,7 @@ function render_home() {
     `${getGreeting()}, ${name}! 👋`;
 
   renderTodayAtAGlance(profile);
+  renderQuickShortcuts(profile);
 }
 
 function renderTodayAtAGlance(profile) {
@@ -95,6 +96,24 @@ function renderTodayAtAGlance(profile) {
       <span class="glance-text">${item.text}</span>
       <span style="color:var(--primary);font-size:22px;flex-shrink:0;margin-left:auto;padding-left:8px">›</span>
     </a>`).join('');
+}
+
+function renderQuickShortcuts(profile) {
+  const el = document.getElementById('home-shortcuts');
+  if (!el) return;
+  const enabled = profile.enabledModules || [];
+  const all = [
+    { href: '#medications',  icon: '💊', label: 'My Medicines', mod: 'medications' },
+    { href: '#calendar',     icon: '📅', label: 'My Schedule',  mod: 'calendar' },
+    { href: '#doctors-notes',icon: '📋', label: 'Doctor Visits',mod: 'doctors-notes' },
+    { href: '#ice-contacts', icon: '🚨', label: 'Emergency',    mod: 'ice-contacts' },
+    { href: '#food',         icon: '🍽', label: 'Food & Meals', mod: 'food' },
+    { href: '#wellness',     icon: '🌿', label: 'Calm & Rest',  mod: 'wellness' },
+  ];
+  const chips = all.filter(s => enabled.includes(s.mod));
+  el.innerHTML = chips.map(s =>
+    `<a href="${s.href}" class="shortcut-chip">${s.icon} ${s.label}</a>`
+  ).join('');
 }
 
 function formatTime12(time24) {

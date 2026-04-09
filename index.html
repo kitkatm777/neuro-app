@@ -17,8 +17,16 @@
 
   <!-- ── TOP BAR ─────────────────────────────────────── -->
   <header role="banner" class="topbar">
-    <a href="#home" class="topbar-title" style="text-decoration:none;display:flex;align-items:center;gap:2px">
-      <img src="images/riley-icon.svg" alt="" aria-hidden="true" style="height:68px;width:68px;flex-shrink:0;display:block">
+    <a href="#home" class="topbar-title" style="text-decoration:none;display:flex;align-items:center;gap:10px">
+      <svg width="40" height="40" viewBox="0 0 100 100" fill="var(--primary)" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <!-- Main pad -->
+        <ellipse cx="50" cy="70" rx="25" ry="21"/>
+        <!-- Toe pads -->
+        <ellipse cx="21" cy="47" rx="12" ry="10" transform="rotate(-18 21 47)"/>
+        <ellipse cx="42" cy="34" rx="12" ry="10"/>
+        <ellipse cx="63" cy="34" rx="12" ry="10"/>
+        <ellipse cx="82" cy="47" rx="12" ry="10" transform="rotate(18 82 47)"/>
+      </svg>
       <span>Riley</span>
     </a>
     <nav class="topbar-right" aria-label="Quick actions">
@@ -84,6 +92,10 @@
       <!-- Today at a glance -->
       <div class="section-label">Today at a Glance</div>
       <div class="glance-card" id="home-glance" aria-live="polite"></div>
+
+      <!-- Quick shortcuts -->
+      <div class="section-label" style="margin-top:8px">Quick Access</div>
+      <div class="shortcut-row" id="home-shortcuts"></div>
     </section>
 
     <!-- ════ MY HEALTH HUB ═════════════════════════════ -->
@@ -540,19 +552,36 @@
   <!-- ── BOTTOM NAVIGATION ────────────────────────── -->
   <nav class="bottom-nav" aria-label="Main navigation">
     <a href="#home" class="bnav-item" id="bnav-home" aria-label="Home">
-      <span class="bnav-icon">🏠</span>
+      <svg class="bnav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M3 10.5L12 3l9 7.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1v-9.5z"/>
+        <path d="M9 21V13h6v8"/>
+      </svg>
       <span class="bnav-label">Home</span>
     </a>
     <a href="#my-health" class="bnav-item" id="bnav-health" aria-label="My Health">
-      <span class="bnav-icon">💊</span>
+      <svg class="bnav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
+      </svg>
       <span class="bnav-label">My Health</span>
     </a>
     <a href="#my-life" class="bnav-item" id="bnav-life" aria-label="My Life">
-      <span class="bnav-icon">🌟</span>
+      <svg class="bnav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="4"/>
+        <line x1="12" y1="2" x2="12" y2="5"/>
+        <line x1="12" y1="19" x2="12" y2="22"/>
+        <line x1="4.22" y1="4.22" x2="6.34" y2="6.34"/>
+        <line x1="17.66" y1="17.66" x2="19.78" y2="19.78"/>
+        <line x1="2" y1="12" x2="5" y2="12"/>
+        <line x1="19" y1="12" x2="22" y2="12"/>
+        <line x1="4.22" y1="19.78" x2="6.34" y2="17.66"/>
+        <line x1="17.66" y1="6.34" x2="19.78" y2="4.22"/>
+      </svg>
       <span class="bnav-label">My Life</span>
     </a>
     <a href="#help-hub" class="bnav-item" id="bnav-help" aria-label="Help and Support">
-      <span class="bnav-icon">📞</span>
+      <svg class="bnav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8 19.79 19.79 0 01.01 1.18a2 2 0 012-2h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L8.09 6a16 16 0 006.9 6.9l.39-.39a2 2 0 012.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0122 14.92z"/>
+      </svg>
       <span class="bnav-label">Help</span>
     </a>
   </nav>
