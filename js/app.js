@@ -128,6 +128,7 @@ function init() {
     };
     Storage.set('ng_profile', profile);
     Seed.apply();
+    Seed.demoData();
   }
   document.documentElement.setAttribute('data-theme',   profile.theme    || 'light');
   document.documentElement.setAttribute('data-fontsize', profile.fontSize || 'medium');

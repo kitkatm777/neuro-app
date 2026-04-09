@@ -86,5 +86,131 @@ const Seed = {
     if (!Storage.get('ng_pantry'))         Storage.set('ng_pantry',         this.pantry);
     if (!Storage.get('ng_food_links'))     Storage.set('ng_food_links',     this.foodLinks);
     if (!Storage.get('ng_wellness_links')) Storage.set('ng_wellness_links', this.wellnessLinks);
+  },
+
+  // Rich demo data for Richard — call once on first launch
+  demoData() {
+    // ── Medications ───────────────────────────────────────────
+    if (!Storage.get('ng_medications')) {
+      const meds = [
+        {
+          id: 'med-cl', brandName: 'Sinemet',
+          genericName: 'Carbidopa-Levodopa', dosage: '25-100 mg', form: 'Tablet',
+          instructions: 'Take on an empty stomach, 30 minutes before meals.',
+          pillDescription: 'Small yellow oval tablet',
+          schedule: [
+            { slot: 'morning',   time: '08:00' },
+            { slot: 'afternoon', time: '14:00' },
+            { slot: 'evening',   time: '19:00' },
+          ]
+        },
+        {
+          id: 'med-rp', brandName: 'Requip',
+          genericName: 'Ropinirole', dosage: '2 mg', form: 'Tablet',
+          instructions: 'Take with or without food.',
+          pillDescription: 'Small white round tablet',
+          schedule: [
+            { slot: 'morning',  time: '09:00' },
+            { slot: 'bedtime',  time: '21:00' },
+          ]
+        },
+        {
+          id: 'med-mel', brandName: 'Melatonin',
+          genericName: 'Melatonin', dosage: '3 mg', form: 'Tablet',
+          instructions: 'Take 30 minutes before bed.',
+          pillDescription: 'Small purple tablet',
+          schedule: [
+            { slot: 'bedtime', time: '21:30' },
+          ]
+        },
+      ];
+      Storage.set('ng_medications', meds);
+    }
+
+    // ── Medication log — mark morning doses as taken today ────
+    if (!Storage.get('ng_med_log')) {
+      const today = new Date().toISOString().slice(0, 10);
+      Storage.set('ng_med_log', [
+        { id: 'ml1', date: today, medicationId: 'med-cl',  slot: 'morning',   taken: true, timestamp: Date.now() - 3600000 },
+        { id: 'ml2', date: today, medicationId: 'med-rp',  slot: 'morning',   taken: true, timestamp: Date.now() - 3500000 },
+      ]);
+    }
+
+    // ── Emergency contacts ────────────────────────────────────
+    if (!Storage.get('ng_contacts')) {
+      Storage.set('ng_contacts', [
+        { id: 'c1', name: 'Sarah Johnson',  relationship: 'Daughter',      phone: '617-555-0142', email: 'sarah.johnson@email.com', notes: 'Call first. She lives 10 minutes away.',    isPrimary: true,  isMedMonitor: true  },
+        { id: 'c2', name: 'Michael Johnson',relationship: 'Son',           phone: '617-555-0198', email: 'michael.j@email.com',     notes: 'Works until 5 pm. Can help evenings.',      isPrimary: false, isMedMonitor: false },
+        { id: 'c3', name: 'Dr. Linda Chen', relationship: 'Neurologist',   phone: '617-555-8400', email: '',                        notes: 'Massachusetts General Hospital. Mon–Fri 9–5.', isPrimary: false, isMedMonitor: false },
+        { id: 'c4', name: 'Maria Santos',   relationship: 'Home Care Aide',phone: '617-555-2271', email: '',                        notes: 'Visits Mon, Wed, Fri mornings.',            isPrimary: false, isMedMonitor: false },
+      ]);
+    }
+
+    // ── Calendar events ───────────────────────────────────────
+    if (!Storage.get('ng_events')) {
+      const d = new Date();
+      const fmt = offset => {
+        const x = new Date(d); x.setDate(d.getDate() + offset);
+        return x.toISOString().slice(0, 10);
+      };
+      Storage.set('ng_events', [
+        { id: 'ev1', title: 'Maria — Home Care Visit', date: fmt(1),  time: '09:00', notes: 'Morning routine help', category: 'health',   recurring: 'none' },
+        { id: 'ev2', title: 'Grandchildren Visit — Emma & Noah', date: fmt(2), time: '14:00', notes: 'Sarah bringing the kids. Wear the blue sweater!', category: 'family', recurring: 'none' },
+        { id: 'ev3', title: 'Dr. Chen — Neurology Check-up', date: fmt(7),  time: '10:30', notes: 'MGH Neurology Clinic. Sarah will drive.', category: 'health', recurring: 'none' },
+        { id: 'ev4', title: 'Pharmacy Pickup — Sinemet refill', date: fmt(5), time: '11:00', notes: 'CVS on Main St.', category: 'health', recurring: 'none' },
+      ]);
+    }
+
+    // ── Doctor's notes ────────────────────────────────────────
+    if (!Storage.get('ng_doctors_notes')) {
+      Storage.set('ng_doctors_notes', [
+        {
+          id: 'dn1', date: '2026-03-12', doctor: 'Dr. Linda Chen',
+          specialty: 'Neurology', clinic: 'MGH Neurology',
+          notes: 'Parkinson\'s stable. Motor symptoms well-controlled on current Sinemet dose. Continue Requip. Discussed importance of regular exercise — aim for 30 min walk daily. Sleep improving with Melatonin. Next visit in 4 weeks.',
+          followUp: '2026-04-16', followUpNote: 'Check tremor response to new dosing schedule.',
+        },
+        {
+          id: 'dn2', date: '2026-01-28', doctor: 'Dr. Priya Mehta',
+          specialty: 'Primary Care', clinic: 'Brookside Family Medicine',
+          notes: 'Annual physical. Blood pressure 122/78 — excellent. Cholesterol in normal range. Recommended Mediterranean diet, which Richard is already following. Flu shot given. All vaccinations up to date.',
+          followUp: '',  followUpNote: '',
+        },
+      ]);
+    }
+
+    // ── Bills ─────────────────────────────────────────────────
+    if (!Storage.get('ng_bills')) {
+      const d2 = new Date();
+      const due = offset => {
+        const x = new Date(d2); x.setDate(d2.getDate() + offset);
+        return x.toISOString().slice(0, 10);
+      };
+      Storage.set('ng_bills', [
+        { id: 'b1', name: 'Electric Bill',            amount: 94.00,  dueDate: due(6),  isPaid: false, isAutomatic: true,  notes: 'Eversource — auto-pay on the 15th' },
+        { id: 'b2', name: 'Medicare Supplement',      amount: 187.50, dueDate: due(1),  isPaid: false, isAutomatic: true,  notes: 'AARP — auto-pay' },
+        { id: 'b3', name: 'Phone Bill',               amount: 45.00,  dueDate: due(12), isPaid: false, isAutomatic: false, notes: 'Verizon — pay online or call Sarah' },
+        { id: 'b4', name: 'Water & Sewer',            amount: 68.00,  dueDate: due(18), isPaid: false, isAutomatic: false, notes: 'City of Boston — quarterly' },
+      ]);
+    }
+
+    // ── Birthdays ─────────────────────────────────────────────
+    if (!Storage.get('ng_birthdays')) {
+      const yr = new Date().getFullYear();
+      Storage.set('ng_birthdays', [
+        { id: 'bd1', name: 'Sarah Johnson (daughter)', date: `${yr}-04-18`, notes: 'Loves yellow tulips and lemon cake.' },
+        { id: 'bd2', name: 'Emma Johnson (granddaughter)', date: `${yr}-06-03`, notes: 'She will be turning 7!' },
+        { id: 'bd3', name: 'Michael Johnson (son)', date: `${yr}-09-22`, notes: 'Likes the Boston Red Sox.' },
+      ]);
+    }
+
+    // ── Passwords placeholder ─────────────────────────────────
+    if (!Storage.get('ng_passwords')) {
+      Storage.set('ng_passwords', [
+        { id: 'pw1', site: 'Medicare.gov',       username: 'richard.johnson54', password: '', notes: 'Account for benefits & claims' },
+        { id: 'pw2', site: 'Gmail',              username: 'richard.johnson1954@gmail.com', password: '', notes: '' },
+        { id: 'pw3', site: 'CVS Pharmacy',       username: 'rjohnson@email.com', password: '', notes: 'Prescription refills online' },
+      ]);
+    }
   }
 };
