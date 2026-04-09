@@ -6,7 +6,7 @@
 
 :root {
   /* Colours — all text meets 7:1 on --bg and --surface */
-  --bg:        #fdf8f2;   /* warm off-white */
+  --bg:        #e8f0ea;   /* light sage green */
   --surface:   #ffffff;
   --primary:   #1a5c38;   /* dark sage green  — 7.6:1 on #fdf8f2 */
   --secondary: #154d30;   /* deeper green     — 9:1  on #fdf8f2 */
