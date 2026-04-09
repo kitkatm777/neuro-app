@@ -74,7 +74,15 @@ const Seed = {
   ],
   apply() {
     if (!Storage.get('ng_helplines'))      Storage.set('ng_helplines',      this.helplines);
-    if (!Storage.get('ng_recipes'))        Storage.set('ng_recipes',        this.recipes);
+    if (!Storage.get('ng_recipes')) {
+      // Normalize: convert array ingredients/steps to newline-separated strings
+      const normalized = this.recipes.map(r => ({
+        ...r,
+        ingredients: Array.isArray(r.ingredients) ? r.ingredients.join('\n') : (r.ingredients || ''),
+        steps:       Array.isArray(r.steps)       ? r.steps.join('\n')       : (r.steps || '')
+      }));
+      Storage.set('ng_recipes', normalized);
+    }
     if (!Storage.get('ng_pantry'))         Storage.set('ng_pantry',         this.pantry);
     if (!Storage.get('ng_food_links'))     Storage.set('ng_food_links',     this.foodLinks);
     if (!Storage.get('ng_wellness_links')) Storage.set('ng_wellness_links', this.wellnessLinks);
