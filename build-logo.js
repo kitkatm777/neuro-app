@@ -3,72 +3,46 @@ const path = require('path');
 
 const b64 = 'data:image/png;base64,' + fs.readFileSync(path.join(__dirname, 'images/DOGLOGO.png')).toString('base64');
 
-// ── SVG filter: invert image → white lines on transparent bg ──
-// Black line art on white → invert → white lines on black → alpha from luminance → white on transparent
-const whiteFilter = `
-    <filter id="makeWhite" color-interpolation-filters="sRGB" x="-5%" y="-5%" width="110%" height="110%">
-      <!-- Step 1: invert so black lines become white, white bg becomes black -->
-      <feComponentTransfer result="inv">
-        <feFuncR type="linear" slope="-1" intercept="1"/>
-        <feFuncG type="linear" slope="-1" intercept="1"/>
-        <feFuncB type="linear" slope="-1" intercept="1"/>
-      </feComponentTransfer>
-      <!-- Step 2: set RGB=white, alpha=luminance of inverted image (white lines = opaque, black bg = transparent) -->
-      <feColorMatrix in="inv" type="matrix"
-        values="0 0 0 0 1
-                0 0 0 0 1
-                0 0 0 0 1
-                0.2126 0.7152 0.0722 0 0"/>
+// Filter: black lines on white PNG → brand green lines on transparent background
+// Alpha = inverse of luminance (dark pixel → opaque, white pixel → transparent)
+// Color = #1a5c38 (R:0.102, G:0.361, B:0.220)
+const greenFilter = `
+    <filter id="makeGreen" color-interpolation-filters="sRGB" x="-5%" y="-5%" width="110%" height="110%">
+      <feColorMatrix type="matrix"
+        values="0      0      0      0  0.102
+                0      0      0      0  0.361
+                0      0      0      0  0.220
+               -0.2126 -0.7152 -0.0722  0  1"/>
     </filter>`;
 
-// ── Icon only (circle badge) ───────────────────────────────────
-const icon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" role="img" aria-label="Riley logo">
-  <defs>
-    ${whiteFilter}
-    <clipPath id="c"><circle cx="90" cy="90" r="87"/></clipPath>
-  </defs>
-
-  <!-- Deep green circle -->
-  <circle cx="90" cy="90" r="90" fill="#1a5c38"/>
-
-  <!-- Subtle inner ring -->
-  <circle cx="90" cy="90" r="85" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="2.5"/>
-
-  <!-- Dog — white on green -->
-  <image href="${b64}" x="2" y="6" width="176" height="168"
-         clip-path="url(#c)" filter="url(#makeWhite)"/>
+// ── Icon — just the dog, no circle, green on transparent ───────
+const icon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="Riley logo">
+  <defs>${greenFilter}</defs>
+  <image href="${b64}" x="0" y="0" width="200" height="200" filter="url(#makeGreen)"/>
 </svg>`;
 
 // ── Full horizontal lockup ─────────────────────────────────────
-const fullLogo = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 180" role="img" aria-label="Riley — Your Daily Life Hub">
-  <defs>
-    ${whiteFilter}
-    <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%">
-      <feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#00000028"/>
-    </filter>
-    <clipPath id="c2"><circle cx="90" cy="90" r="86"/></clipPath>
-  </defs>
+const fullLogo = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 200" role="img" aria-label="Riley — Your Daily Life Hub">
+  <defs>${greenFilter}</defs>
 
-  <!-- Badge -->
-  <circle cx="90" cy="90" r="90" fill="#1a5c38" filter="url(#shadow)"/>
-  <circle cx="90" cy="90" r="85" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="2.5"/>
+  <!-- White background -->
+  <rect width="520" height="200" fill="white" rx="16"/>
 
-  <!-- Dog white on green -->
-  <image href="${b64}" x="2" y="6" width="176" height="168"
-         clip-path="url(#c2)" filter="url(#makeWhite)"/>
+  <!-- Dog — green on white, large -->
+  <image href="${b64}" x="8" y="0" width="200" height="200" filter="url(#makeGreen)"/>
 
   <!-- "Riley" wordmark -->
-  <text x="198" y="90"
+  <text x="224" y="106"
         font-family="'Atkinson Hyperlegible', 'Segoe UI', Arial, sans-serif"
-        font-size="80" font-weight="700" fill="#1a5c38" letter-spacing="-2">Riley</text>
+        font-size="88" font-weight="700" fill="#1a5c38" letter-spacing="-2">Riley</text>
 
   <!-- Tagline -->
-  <text x="202" y="120"
+  <text x="228" y="138"
         font-family="'Atkinson Hyperlegible', 'Segoe UI', Arial, sans-serif"
-        font-size="20" font-weight="400" fill="#557055" letter-spacing="0.8">Your Daily Life Hub</text>
+        font-size="21" font-weight="400" fill="#557055" letter-spacing="0.8">Your Daily Life Hub</text>
 
-  <!-- Underline accent -->
-  <rect x="202" y="129" width="270" height="3.5" rx="1.75" fill="#c8e6ce"/>
+  <!-- Green underline accent -->
+  <rect x="228" y="148" width="280" height="4" rx="2" fill="#c8e6ce"/>
 </svg>`;
 
 fs.writeFileSync(path.join(__dirname, 'images/riley-icon.svg'),  icon,     'utf8');
