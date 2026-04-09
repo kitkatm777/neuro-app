@@ -90,10 +90,10 @@ function renderTodayAtAGlance(profile) {
   }
 
   el.innerHTML = items.map(item => `
-    <a href="${item.href}" class="glance-item" style="text-decoration:none;color:inherit;${item.urgent ? 'background:#fff8e1;border-radius:10px;padding:14px;margin:-4px;' : ''}">
+    <a href="${item.href}" class="glance-item${item.urgent ? ' glance-urgent' : ''}" style="text-decoration:none;color:inherit;">
       <span class="glance-icon">${item.icon}</span>
-      <span class="glance-text" style="font-size:var(--font-base);line-height:var(--line-height);font-weight:${item.urgent ? '700' : '400'};">${item.text}</span>
-      <span style="color:var(--primary);font-size:22px;flex-shrink:0">›</span>
+      <span class="glance-text">${item.text}</span>
+      <span style="color:var(--primary);font-size:22px;flex-shrink:0;margin-left:auto;padding-left:8px">›</span>
     </a>`).join('');
 }
 

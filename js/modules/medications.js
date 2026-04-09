@@ -5,6 +5,22 @@ const SLOTS = [
   { id:'bedtime',   label:'Bedtime',   emoji:'🌙' },
 ];
 
+// ── Toast notification ─────────────────────────────────
+let toastTimer = null;
+function showToast(msg) {
+  let el = document.getElementById('riley-toast');
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 'riley-toast';
+    el.className = 'toast';
+    document.body.appendChild(el);
+  }
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 2500);
+}
+
 function render_medications() {
   renderTodayView();
   setupMedTabs();
@@ -47,31 +63,48 @@ function renderTodayView() {
 
   if (meds.length === 0) {
     container.innerHTML = `
-      <div class="card">
-        <p style="font-size:20px;color:var(--text-muted);text-align:center;padding:20px 0">
-          No medications added yet.<br><br>
-          <button class="btn btn-primary" onclick="document.getElementById('med-tab-list').click()">+ Add a Medication</button>
-        </p>
+      <div class="card" style="text-align:center;padding:32px 24px">
+        <div style="font-size:56px;margin-bottom:16px">💊</div>
+        <p style="font-size:22px;color:var(--text-muted);margin-bottom:20px">No medications added yet.</p>
+        <button class="btn btn-primary" onclick="document.getElementById('med-tab-list').click()">+ Add a Medication</button>
       </div>`;
     return;
   }
 
-  // Group doses by slot
   const now = new Date();
+  const totalDue = meds.reduce((n, m) => n + (m.schedule||[]).filter(s => {
+    const [h] = (s.time || '00:00').split(':').map(Number);
+    return h <= now.getHours();
+  }).length, 0);
+  const takenCount = log.filter(l => l.taken).length;
+  const allDone = totalDue > 0 && takenCount >= totalDue;
+
   let html = '';
+
+  // All-done celebration banner
+  if (allDone) {
+    html += `<div style="background:#e8f5e9;border:2px solid #a5d6a7;border-radius:16px;padding:20px 24px;margin:12px 20px;display:flex;align-items:center;gap:16px">
+      <span style="font-size:40px">🎉</span>
+      <div>
+        <div style="font-size:22px;font-weight:700;color:#1a5c38">All done for now!</div>
+        <div style="font-size:18px;color:#2e6b3e;margin-top:4px">All medicines taken today. Great job, Richard!</div>
+      </div>
+    </div>`;
+  }
+
+  // Group doses by slot
   SLOTS.forEach(slot => {
     const slotMeds = meds.filter(m => (m.schedule||[]).some(s => s.slot === slot.id));
     if (slotMeds.length === 0) return;
 
     html += `<div class="card" style="margin:12px 20px">
-      <div style="font-size:20px;font-weight:700;color:var(--primary);margin-bottom:16px">${slot.emoji} ${slot.label}</div>`;
+      <div class="med-slot-header">${slot.emoji} ${slot.label}</div>`;
 
     slotMeds.forEach(m => {
       const schedEntry = m.schedule.find(s => s.slot === slot.id);
       const logEntry = log.find(l => l.medicationId === m.id && l.slot === slot.id);
       const taken = logEntry?.taken || false;
 
-      // Missed check: scheduled time > 60 min ago and not taken
       let missed = false;
       if (!taken && schedEntry?.time) {
         const [sh, sm] = schedEntry.time.split(':').map(Number);
@@ -79,23 +112,25 @@ function renderTodayView() {
         missed = (now - scheduled) > 60 * 60 * 1000;
       }
 
-      const bg = taken ? '#e8f5e9' : missed ? '#fff3e0' : 'var(--surface)';
-      const border = taken ? '#a5d6a7' : missed ? '#ffcc80' : 'var(--border)';
-      const statusText = taken ? '✓ Taken' : missed ? '⚠ Missed' : '';
-      const statusColor = taken ? '#2e6b3e' : '#b45309';
+      const cardClass = taken ? 'med-card taken' : missed ? 'med-card missed' : 'med-card';
+      const btnClass  = taken ? 'dose-btn taken' : 'dose-btn';
+      const statusHtml = taken
+        ? '<div class="med-status taken">✓ Taken</div>'
+        : missed
+        ? '<div class="med-status missed">⚠ Missed — please take now</div>'
+        : '';
 
       html += `
-        <div style="display:flex;align-items:center;gap:16px;padding:16px;background:${bg};border:2px solid ${border};border-radius:12px;margin-bottom:10px">
-          <div style="flex:1">
-            <div style="font-size:20px;font-weight:700">${m.brandName}</div>
-            ${m.genericName ? `<div style="font-size:15px;color:var(--text-muted)">${m.genericName}</div>` : ''}
-            <div style="font-size:16px;color:var(--text-muted)">${m.dosage || ''} ${m.form || ''}</div>
-            ${m.instructions ? `<div style="font-size:15px;color:var(--text-muted);font-style:italic">${m.instructions}</div>` : ''}
-            ${schedEntry?.time ? `<div style="font-size:15px;color:var(--text-muted)">⏰ ${schedEntry.time}</div>` : ''}
-            ${statusText ? `<div style="font-size:15px;font-weight:700;color:${statusColor};margin-top:4px">${statusText}</div>` : ''}
+        <div class="${cardClass}">
+          <div class="med-info">
+            <div class="med-name">${m.brandName}</div>
+            ${m.genericName ? `<div class="med-generic">${m.genericName}</div>` : ''}
+            ${m.dosage ? `<div class="med-dosage">${m.dosage}${m.form ? ' · ' + m.form : ''}</div>` : ''}
+            ${schedEntry?.time ? `<div class="med-time">⏰ ${formatTime12Med(schedEntry.time)}</div>` : ''}
+            ${statusHtml}
           </div>
-          <button onclick="checkDose('${m.id}','${slot.id}','${today}',${taken})"
-            style="min-width:80px;min-height:80px;border-radius:12px;border:3px solid ${taken ? '#4a7c59' : 'var(--border)'};background:${taken ? '#4a7c59' : 'white'};color:${taken ? 'white' : 'var(--text)'};font-size:28px;cursor:pointer;display:flex;align-items:center;justify-content:center"
+          <button class="${btnClass}"
+            onclick="checkDose('${m.id}','${slot.id}','${today}',${taken})"
             aria-label="${taken ? 'Mark as not taken' : 'Mark as taken'}: ${m.brandName}">
             ${taken ? '✓' : '○'}
           </button>
@@ -105,11 +140,10 @@ function renderTodayView() {
   });
 
   if (!html) {
-    html = `<div class="card"><p style="color:var(--text-muted);padding:12px">No doses scheduled. Add a medication with a schedule.</p></div>`;
+    html = `<div class="card" style="margin:12px 20px"><p style="color:var(--text-muted)">No doses scheduled yet.</p></div>`;
   }
   container.innerHTML = html;
 
-  // Check for missed doses and alert caregiver
   detectMissedDoses();
 }
 
@@ -121,6 +155,23 @@ function checkDose(medId, slot, date, currentlyTaken) {
   if (idx >= 0) log[idx] = { ...log[idx], ...entry };
   else log.push(entry);
   Storage.set('ng_med_log', log);
+
+  if (newTaken) {
+    // Check if this was the last remaining dose
+    const meds = Storage.getArray('ng_medications');
+    const now = new Date();
+    const totalDue = meds.reduce((n, m) => n + (m.schedule||[]).filter(s => {
+      const [h] = (s.time || '00:00').split(':').map(Number);
+      return h <= now.getHours();
+    }).length, 0);
+    const takenCount = log.filter(l => l.date === date && l.taken).length;
+    if (takenCount >= totalDue) {
+      showToast('🎉 All medicines taken today!');
+    } else {
+      showToast('✓ Marked as taken!');
+    }
+  }
+
   renderTodayView();
 }
 
@@ -153,34 +204,41 @@ function detectMissedDoses() {
 }
 
 // INTEGRATION POINT: Missed dose caregiver notification
-// Uses EmailJS (client-side, no backend). Configure in Settings: EmailJS public key + template ID.
-// emailjs.send(serviceId, templateId, { to_email, med_name, slot, patient_name })
 function sendMissedDoseAlert(med, slot, caregiver, profile) {
   console.log('[INTEGRATION POINT] Missed dose:', med.brandName, slot, '->', caregiver.email);
-  // if (window.emailjs) emailjs.send('YOUR_SERVICE','YOUR_TEMPLATE',{ to_email: caregiver.email, med_name: med.brandName, slot, patient_name: profile?.name });
+}
+
+function formatTime12Med(time24) {
+  const [h, m] = time24.split(':').map(Number);
+  const ampm = h < 12 ? 'am' : 'pm';
+  const h12 = h === 0 ? 12 : h > 12 ? h - 12 : h;
+  return `${h12}:${String(m).padStart(2, '0')} ${ampm}`;
 }
 
 function renderPrescriptionList() {
   const meds = Storage.getArray('ng_medications');
   const container = document.getElementById('med-prescription-list');
   if (meds.length === 0) {
-    container.innerHTML = `<p style="padding:20px;color:var(--text-muted)">No medications added yet.</p>`;
+    container.innerHTML = `<p style="padding:20px;color:var(--text-muted);font-size:22px">No medications added yet.</p>`;
     return;
   }
   container.innerHTML = meds.map(m => `
     <div class="card" style="margin:8px 20px">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start">
-        <div>
-          <div style="font-size:20px;font-weight:700">${m.brandName}</div>
-          ${m.genericName ? `<div style="color:var(--text-muted)">${m.genericName}</div>` : ''}
-          <div style="margin-top:6px;font-size:16px">${m.dosage || ''} ${m.form || ''}</div>
-          ${m.instructions ? `<div style="color:var(--text-muted);font-style:italic">${m.instructions}</div>` : ''}
-          ${m.pillDescription ? `<div style="color:var(--text-muted);font-size:14px">💊 ${m.pillDescription}</div>` : ''}
-          <div style="margin-top:8px">
-            ${(m.schedule||[]).map(s => `<span style="display:inline-block;background:var(--bg);border-radius:6px;padding:3px 10px;margin:2px;font-size:14px">${SLOTS.find(sl=>sl.id===s.slot)?.emoji||''} ${s.slot} ${s.time||''}</span>`).join('')}
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px">
+        <div style="flex:1">
+          <div style="font-size:22px;font-weight:700">${m.brandName}</div>
+          ${m.genericName ? `<div style="color:var(--text-muted);font-size:18px">${m.genericName}</div>` : ''}
+          <div style="margin-top:6px;font-size:18px">${m.dosage || ''}${m.form ? ' · ' + m.form : ''}</div>
+          ${m.instructions ? `<div style="color:var(--text-muted);font-size:16px;margin-top:4px">${m.instructions}</div>` : ''}
+          ${m.pillDescription ? `<div style="color:var(--text-muted);font-size:15px;margin-top:4px">💊 ${m.pillDescription}</div>` : ''}
+          <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:6px">
+            ${(m.schedule||[]).map(s => {
+              const sl = SLOTS.find(x => x.id === s.slot);
+              return `<span style="display:inline-block;background:#f0f7f0;border:1px solid var(--border);border-radius:20px;padding:4px 14px;font-size:15px;font-weight:600">${sl?.emoji||''} ${sl?.label||s.slot}${s.time ? ' · ' + formatTime12Med(s.time) : ''}</span>`;
+            }).join('')}
           </div>
         </div>
-        <button class="btn btn-ghost" style="padding:8px 12px;flex-shrink:0" onclick="openMedModal('${m.id}')" aria-label="Edit ${m.brandName}">Edit</button>
+        <button class="btn btn-ghost" onclick="openMedModal('${m.id}')" aria-label="Edit ${m.brandName}">Edit</button>
       </div>
     </div>
   `).join('');
@@ -197,18 +255,20 @@ function renderLogView() {
   }
   container.innerHTML = days.map(date => {
     const dayLog = log.filter(l => l.date === date);
-    if (dayLog.length === 0 && meds.length === 0) return '';
     const d = new Date(date + 'T00:00:00');
-    const label = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][d.getDay()] + ' ' + (d.getMonth()+1) + '/' + d.getDate();
+    const label = d.toLocaleDateString('en-US', { weekday:'long', month:'long', day:'numeric' });
     const entries = meds.flatMap(m => (m.schedule||[]).map(s => {
+      const sl = SLOTS.find(x => x.id === s.slot);
       const entry = dayLog.find(l => l.medicationId === m.id && l.slot === s.slot);
-      return `<div style="font-size:15px;padding:4px 0;border-bottom:1px solid var(--border)">
-        ${entry?.taken ? '✅' : '❌'} ${m.brandName} — ${s.slot}
+      return `<div style="font-size:18px;padding:8px 0;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px">
+        <span style="font-size:22px">${entry?.taken ? '✅' : '❌'}</span>
+        <span>${m.brandName}</span>
+        <span style="color:var(--text-muted);font-size:15px">${sl?.emoji||''} ${sl?.label||s.slot}</span>
       </div>`;
     }));
     if (entries.length === 0) return '';
     return `<div class="card" style="margin:8px 20px">
-      <div style="font-weight:700;margin-bottom:8px">${label}</div>
+      <div style="font-size:18px;font-weight:700;color:var(--primary);margin-bottom:10px">${label}</div>
       ${entries.join('')}
     </div>`;
   }).join('');
@@ -285,7 +345,6 @@ function deleteMedication() {
   const id = document.getElementById('med-id').value;
   if (!id || !confirm('Remove this medication?')) return;
   Storage.remove('ng_medications', id);
-  // Remove log entries for this med
   const log = Storage.getArray('ng_med_log').filter(l => l.medicationId !== id);
   Storage.set('ng_med_log', log);
   closeMedModal();

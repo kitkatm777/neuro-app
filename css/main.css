@@ -364,7 +364,15 @@ textarea { resize: vertical; }
 }
 .glance-item:last-child { border-bottom: none; }
 .glance-icon { font-size: 28px; flex-shrink: 0; margin-top: 2px; }
-.glance-text { flex: 1; }
+.glance-text { flex: 1; font-size: var(--font-base); line-height: var(--line-height); }
+.glance-urgent {
+  background: #fff8e1;
+  border-radius: 10px;
+  padding: 14px 12px;
+  margin: 4px -12px;
+  border-bottom: none !important;
+  font-weight: 700;
+}
 
 /* =====================================================
    HUB GRID (My Health / My Life / Help)
@@ -486,6 +494,88 @@ dialog h2 {
    ===================================================== */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; animation: none !important; }
+}
+
+/* =====================================================
+   TOAST NOTIFICATION
+   ===================================================== */
+.toast {
+  position: fixed;
+  bottom: calc(72px + 20px); /* above bottom nav */
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--primary);
+  color: #fff;
+  font-size: 20px;
+  font-weight: 700;
+  padding: 16px 28px;
+  border-radius: 50px;
+  box-shadow: 0 4px 20px rgba(26,92,56,0.4);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  z-index: 9999;
+}
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* =====================================================
+   MEDICATION CARDS (polished class-based styles)
+   ===================================================== */
+.med-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px;
+  border-radius: 14px;
+  border: 2px solid var(--border);
+  background: var(--surface);
+  margin-bottom: 10px;
+  transition: background 0.2s, border-color 0.2s;
+}
+.med-card.taken  { background: #e8f5e9; border-color: #a5d6a7; }
+.med-card.missed { background: #fff8e1; border-color: #ffe082; }
+
+.med-info { flex: 1; min-width: 0; }
+.med-name { font-size: 22px; font-weight: 700; color: var(--text); }
+.med-generic { font-size: 16px; color: var(--text-muted); margin-top: 2px; }
+.med-dosage  { font-size: 16px; color: var(--text-muted); }
+.med-time    { font-size: 16px; color: var(--text-muted); margin-top: 4px; }
+.med-status  { font-size: 16px; font-weight: 700; margin-top: 6px; }
+.med-status.taken  { color: #1a5c38; }
+.med-status.missed { color: #b45309; }
+
+.dose-btn {
+  flex-shrink: 0;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 3px solid var(--border);
+  background: #fff;
+  font-size: 32px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, border-color 0.2s, transform 0.1s;
+}
+.dose-btn.taken {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+.dose-btn:active { transform: scale(0.92); }
+
+.med-slot-header {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--border);
 }
 
 /* =====================================================
