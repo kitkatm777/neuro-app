@@ -8,449 +8,567 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧠</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/modules.css">
-  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 </head>
 <body>
-  <a href="#main-content" class="skip-link">Skip to content</a>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
 
+  <!-- ── TOP BAR ─────────────────────────────────────── -->
   <header role="banner" class="topbar">
     <span class="topbar-title">
-      <svg aria-hidden="true" width="26" height="26" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:8px;margin-bottom:2px">
-        <ellipse cx="32" cy="34" rx="22" ry="18" fill="rgba(255,255,255,0.18)"/>
+      <svg aria-hidden="true" width="28" height="28" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="32" cy="34" rx="22" ry="18" fill="rgba(255,255,255,0.15)"/>
         <path d="M20 28c0-6.627 5.373-12 12-12s12 5.373 12 12c0 3-1.1 5.74-2.9 7.84C39.5 37.7 38 39.5 38 42H26c0-2.5-1.5-4.3-3.1-6.16A11.95 11.95 0 0120 28z" fill="white"/>
-        <rect x="26" y="42" width="12" height="4" rx="2" fill="white" opacity="0.8"/>
+        <rect x="26" y="42" width="12" height="4" rx="2" fill="white" opacity="0.85"/>
         <rect x="28" y="46" width="8" height="3" rx="1.5" fill="white" opacity="0.6"/>
-        <line x1="32" y1="28" x2="32" y2="38" stroke="rgba(44,95,122,0.5)" stroke-width="1.5"/>
-        <line x1="26" y1="30" x2="38" y2="36" stroke="rgba(44,95,122,0.4)" stroke-width="1"/>
-        <line x1="38" y1="30" x2="26" y2="36" stroke="rgba(44,95,122,0.4)" stroke-width="1"/>
-      </svg>Riley
+      </svg>
+      Riley
     </span>
     <nav class="topbar-right" aria-label="Quick actions">
-      <button class="btn-ice" id="btn-ice" aria-label="ICE Emergency Contacts">🚨 ICE Contacts</button>
-      <button class="btn-settings" id="btn-settings" aria-label="Open settings">⚙ Settings</button>
+      <button class="btn-ice" id="btn-ice" aria-label="Open Emergency Contacts">🚨 Emergency</button>
+      <button class="btn-settings" id="btn-settings" aria-label="Open Settings">⚙ Settings</button>
     </nav>
   </header>
 
+  <!-- ── BREADCRUMB ──────────────────────────────────── -->
+  <nav id="breadcrumb" class="breadcrumb" aria-label="You are here"></nav>
+
+  <!-- ── MAIN CONTENT ───────────────────────────────── -->
   <main id="main-content">
 
+    <!-- ════ ONBOARDING ════════════════════════════════ -->
     <section id="onboarding">
-      <div class="card" style="margin:40px 20px;max-width:540px">
+      <div class="card" style="margin:32px 16px;max-width:560px">
         <div id="onboarding-step-1">
-          <h2 style="font-size:28px;color:var(--primary);margin-bottom:8px">Welcome to Riley</h2>
-          <p style="color:var(--text-muted);margin-bottom:24px">Your personal daily life hub. Let's get you set up.</p>
-          <label for="ob-name">Your name</label>
-          <input id="ob-name" type="text" placeholder="e.g. Richard" autocomplete="given-name">
-          <label for="ob-diagnosis">Condition (optional)</label>
+          <h2 style="font-size:var(--font-lg);color:var(--primary);margin-bottom:12px;line-height:1.2">Welcome to Riley</h2>
+          <p style="color:var(--text-muted);margin-bottom:8px;font-size:var(--font-base);line-height:var(--line-height)">
+            Let's set this up together with someone you trust.
+          </p>
+          <p style="color:var(--text-muted);margin-bottom:28px;font-size:var(--font-base);line-height:var(--line-height)">
+            First — what is your name?
+          </p>
+          <label for="ob-name">Your first name</label>
+          <input id="ob-name" type="text" placeholder="e.g. Richard" autocomplete="given-name" style="font-size:24px">
+          <label for="ob-diagnosis">Your condition (optional)</label>
           <input id="ob-diagnosis" type="text" placeholder="e.g. Parkinson's disease">
-          <button class="btn btn-primary" id="ob-next-1" style="width:100%">Next →</button>
+          <button class="btn btn-primary btn-full" id="ob-next-1">Next →</button>
         </div>
         <div id="onboarding-step-2" style="display:none">
-          <h2 style="font-size:24px;color:var(--primary);margin-bottom:8px">Choose your modules</h2>
-          <p style="color:var(--text-muted);margin-bottom:16px">You can change these anytime in Settings.</p>
-          <div id="ob-module-list" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px"></div>
-          <button class="btn btn-primary" id="ob-next-2" style="width:100%">Next →</button>
+          <h2 style="font-size:var(--font-lg);color:var(--primary);margin-bottom:12px;line-height:1.2">Which parts of Riley do you want to use?</h2>
+          <p style="color:var(--text-muted);margin-bottom:20px;font-size:var(--font-base);line-height:var(--line-height)">You can change this anytime in Settings.</p>
+          <div id="ob-module-list" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px"></div>
+          <button class="btn btn-primary btn-full" id="ob-next-2">Next →</button>
         </div>
         <div id="onboarding-step-3" style="display:none">
-          <h2 style="font-size:24px;color:var(--primary);margin-bottom:8px">Set a PIN for Passwords</h2>
-          <p style="color:var(--text-muted);margin-bottom:16px">4-digit PIN to protect your saved passwords.</p>
-          <label for="ob-pin">4-digit PIN</label>
-          <input id="ob-pin" type="password" maxlength="4" inputmode="numeric" placeholder="••••">
-          <button class="btn btn-primary" id="ob-finish" style="width:100%">Get Started</button>
-          <button class="btn btn-ghost" id="ob-skip-pin" style="width:100%;margin-top:8px">Skip — I won't use Passwords</button>
+          <h2 style="font-size:var(--font-lg);color:var(--primary);margin-bottom:12px;line-height:1.2">Set a PIN for your passwords</h2>
+          <p style="color:var(--text-muted);margin-bottom:24px;font-size:var(--font-base);line-height:var(--line-height)">
+            This keeps your saved passwords private. Use 4 numbers.
+          </p>
+          <label for="ob-pin">Your 4-digit PIN</label>
+          <input id="ob-pin" type="password" maxlength="4" inputmode="numeric" placeholder="••••" style="font-size:28px;letter-spacing:8px">
+          <button class="btn btn-primary btn-full" id="ob-finish">Start Using Riley</button>
+          <button class="btn btn-ghost btn-full" id="ob-skip-pin" style="margin-top:12px">Skip — I will not use Passwords</button>
         </div>
       </div>
     </section>
 
+    <!-- ════ HOME ══════════════════════════════════════ -->
     <section id="home">
-      <div class="card" style="margin:20px;border-left:6px solid var(--primary)">
-        <div style="font-size:80px;font-weight:800;color:var(--primary);font-family:Georgia,serif;line-height:1">
-          <span id="clock-time">--:--</span><sup id="clock-ampm" style="font-size:28px;font-weight:400;margin-left:6px">--</sup>
+      <!-- Clock block -->
+      <div class="clock-block">
+        <div>
+          <span id="clock-time" class="clock-time">--:--</span><span id="clock-ampm" class="clock-ampm">--</span>
         </div>
-        <div id="clock-day" style="font-size:26px;color:var(--secondary);font-weight:700;margin-top:6px"></div>
-        <div id="clock-date" style="font-size:19px;color:var(--text-muted);margin-top:2px"></div>
-        <div id="home-greeting" style="font-size:22px;color:var(--primary);font-weight:600;margin-top:14px;padding-top:14px;border-top:1px solid var(--border)"></div>
+        <div id="clock-day"  class="clock-day"></div>
+        <div id="clock-date" class="clock-date"></div>
+        <div id="home-greeting" class="clock-greeting"></div>
       </div>
-      <div id="home-status-row" style="display:flex;gap:10px;margin:0 20px 16px;flex-wrap:wrap"></div>
-      <div style="font-size:13px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:1px;margin:0 20px 10px">My Modules</div>
-      <nav id="home-module-grid" aria-label="Modules" style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:0 20px 30px"></nav>
+
+      <!-- Today at a glance -->
+      <div class="section-label">Today at a Glance</div>
+      <div class="glance-card" id="home-glance" aria-live="polite"></div>
     </section>
 
+    <!-- ════ MY HEALTH HUB ═════════════════════════════ -->
+    <section id="my-health">
+      <button class="btn-back" onclick="location.hash='#home'" aria-label="Back to Home">Back</button>
+      <h1 class="module-heading">My Health</h1>
+      <nav id="hub-health-grid" class="hub-grid" aria-label="Health modules"></nav>
+    </section>
+
+    <!-- ════ MY LIFE HUB ═══════════════════════════════ -->
+    <section id="my-life">
+      <button class="btn-back" onclick="location.hash='#home'" aria-label="Back to Home">Back</button>
+      <h1 class="module-heading">My Life</h1>
+      <nav id="hub-life-grid" class="hub-grid" aria-label="Life modules"></nav>
+    </section>
+
+    <!-- ════ HELP HUB ══════════════════════════════════ -->
+    <section id="help-hub">
+      <button class="btn-back" onclick="location.hash='#home'" aria-label="Back to Home">Back</button>
+      <h1 class="module-heading">Help &amp; Support</h1>
+      <nav id="hub-help-grid" class="hub-grid" aria-label="Help modules" style="margin-bottom:8px"></nav>
+      <div id="hub-help-lines" style="padding:0 16px 16px"></div>
+    </section>
+
+    <!-- ════ CALENDAR ══════════════════════════════════ -->
     <section id="calendar">
-      <button class="btn-back" onclick="history.back()">← Back</button>
-      <h1 class="module-heading">📅 Calendar</h1>
-      <div style="display:flex;gap:10px;padding:0 20px 12px;flex-wrap:wrap">
+      <button class="btn-back" onclick="history.back()" aria-label="Go back">Back</button>
+      <h1 class="module-heading">📅 My Schedule</h1>
+      <div style="display:flex;gap:12px;padding:0 16px 14px;flex-wrap:wrap">
         <button class="btn btn-primary" id="cal-tab-month">Monthly View</button>
-        <button class="btn btn-ghost" id="cal-tab-week">This Week</button>
+        <button class="btn btn-ghost"   id="cal-tab-week">This Week</button>
         <button class="btn btn-primary" id="cal-add-btn" style="margin-left:auto">+ Add Event</button>
       </div>
       <div id="cal-body"></div>
-      <dialog id="cal-modal" aria-modal="true" style="border-radius:16px;border:none;padding:0;width:min(560px,95vw);max-height:90vh;overflow-y:auto">
-        <div style="padding:24px">
-          <h2 style="font-size:22px;color:var(--primary);margin-bottom:16px" id="cal-modal-title">Add Event</h2>
+      <dialog id="cal-modal" aria-modal="true" aria-label="Event details">
+        <div class="dialog-body">
+          <h2 id="cal-modal-title">Add Event</h2>
           <input type="hidden" id="cal-event-id">
-          <label for="cal-title">Event Title *</label><input id="cal-title" type="text" placeholder="e.g. Doctor visit">
-          <label for="cal-date">Date *</label><input id="cal-date" type="date">
-          <label for="cal-time">Time</label><input id="cal-time" type="time">
-          <label for="cal-type">Type of Event</label>
-          <select id="cal-type" style="margin-bottom:16px">
+          <label for="cal-title">What is the event? *</label>
+          <input id="cal-title" type="text" placeholder="e.g. Doctor visit" autocapitalize="words">
+          <label for="cal-date">Date *</label>
+          <input id="cal-date" type="date">
+          <label for="cal-time">Time</label>
+          <input id="cal-time" type="time">
+          <label for="cal-type">Type of event</label>
+          <select id="cal-type" style="margin-bottom:20px">
             <option>Medical Appointment</option>
-            <option>Social Obligation</option>
+            <option>Social Visit</option>
             <option>Visitor Coming</option>
-            <option>At-Home Care / Aide Visit</option>
+            <option>Home Care Visit</option>
             <option>Personal Reminder</option>
           </select>
-          <label for="cal-location">Location (optional)</label><input id="cal-location" type="text" placeholder="e.g. Movement Disorder Clinic">
-          <label for="cal-notes">Notes</label><textarea id="cal-notes" rows="3" style="resize:vertical"></textarea>
-          <div style="display:flex;gap:10px;flex-wrap:wrap">
-            <button class="btn btn-primary" id="cal-save-btn" style="flex:1">Save Event</button>
-            <button class="btn btn-ghost" id="cal-cancel-btn" style="flex:1">Cancel</button>
-            <button class="btn btn-danger" id="cal-delete-btn" style="display:none;flex:1">Delete</button>
+          <label for="cal-location">Where? (optional)</label>
+          <input id="cal-location" type="text" placeholder="e.g. Movement Disorder Clinic">
+          <label for="cal-notes">Notes</label>
+          <textarea id="cal-notes" rows="3" placeholder="Any extra details..."></textarea>
+          <div class="dialog-actions">
+            <button class="btn btn-primary" id="cal-save-btn">Save Event</button>
+            <button class="btn btn-ghost"   id="cal-cancel-btn">Cancel</button>
+            <button class="btn btn-danger"  id="cal-delete-btn" style="display:none">Delete</button>
           </div>
         </div>
       </dialog>
     </section>
 
+    <!-- ════ MEDICATIONS ═══════════════════════════════ -->
     <section id="medications">
-      <button class="btn-back" onclick="history.back()">← Back</button>
-      <h1 class="module-heading">💊 Medications</h1>
-      <div style="display:flex;gap:10px;padding:0 20px 16px;flex-wrap:wrap">
-        <button class="btn btn-primary" id="med-tab-today">Today's Doses</button>
-        <button class="btn btn-ghost" id="med-tab-list">My Medications</button>
-        <button class="btn btn-ghost" id="med-tab-log">History</button>
+      <button class="btn-back" onclick="history.back()" aria-label="Go back">Back</button>
+      <h1 class="module-heading">💊 My Medicines</h1>
+      <div style="display:flex;gap:12px;padding:0 16px 18px;flex-wrap:wrap">
+        <button class="btn btn-primary" id="med-tab-today">Today's Medicines</button>
+        <button class="btn btn-ghost"   id="med-tab-list">My Medicines List</button>
+        <button class="btn btn-ghost"   id="med-tab-log">History</button>
       </div>
       <div id="med-view-today"></div>
       <div id="med-view-list" style="display:none">
-        <div style="padding:0 20px 12px"><button class="btn btn-primary" id="med-add-btn">+ Add Medication</button></div>
+        <div style="padding:0 16px 14px"><button class="btn btn-primary" id="med-add-btn">+ Add a Medicine</button></div>
         <div id="med-prescription-list"></div>
       </div>
       <div id="med-view-log" style="display:none"><div id="med-log-view"></div></div>
-      <dialog id="med-modal" aria-modal="true" style="border-radius:16px;border:none;padding:0;width:min(580px,95vw);max-height:90vh;overflow-y:auto">
-        <div style="padding:24px">
-          <h2 style="font-size:22px;color:var(--primary);margin-bottom:16px" id="med-modal-title">Add Medication</h2>
+      <dialog id="med-modal" aria-modal="true" aria-label="Medicine details">
+        <div class="dialog-body">
+          <h2 id="med-modal-title">Add a Medicine</h2>
           <input type="hidden" id="med-id">
-          <label for="med-brand">Medication Name *</label><input id="med-brand" type="text" placeholder="e.g. Carbidopa-Levodopa">
-          <label for="med-generic">Generic Name</label><input id="med-generic" type="text">
-          <label for="med-dosage">Dosage</label><input id="med-dosage" type="text" placeholder="e.g. 10mg">
+          <label for="med-brand">Medicine name *</label>
+          <input id="med-brand" type="text" placeholder="e.g. Levodopa" autocapitalize="words">
+          <label for="med-generic">Generic name</label>
+          <input id="med-generic" type="text">
+          <label for="med-dosage">Dosage</label>
+          <input id="med-dosage" type="text" placeholder="e.g. 100mg">
           <label for="med-form">Form</label>
-          <select id="med-form" style="margin-bottom:16px"><option>Tablet</option><option>Capsule</option><option>Liquid</option><option>Patch</option><option>Other</option></select>
-          <label for="med-instructions">Instructions</label><input id="med-instructions" type="text" placeholder="e.g. Take with food">
-          <label for="med-desc">What does the pill look like?</label><input id="med-desc" type="text" placeholder="e.g. round white tablet, imprinted M5">
-          <fieldset style="border:2px solid var(--border);border-radius:10px;padding:16px;margin-bottom:16px">
-            <legend style="font-weight:700;padding:0 8px;font-size:18px">Schedule</legend>
+          <select id="med-form" style="margin-bottom:20px">
+            <option>Tablet</option><option>Capsule</option><option>Liquid</option><option>Patch</option><option>Other</option>
+          </select>
+          <label for="med-instructions">How to take it</label>
+          <input id="med-instructions" type="text" placeholder="e.g. Take with food">
+          <label for="med-desc">What does it look like?</label>
+          <input id="med-desc" type="text" placeholder="e.g. Small round white tablet">
+          <fieldset style="border:2px solid var(--border);border-radius:12px;padding:20px;margin-bottom:20px">
+            <legend style="font-weight:700;padding:0 8px;font-size:var(--font-base)">When to take it</legend>
             <div id="med-schedule-fields"></div>
-            <button type="button" class="btn btn-ghost" id="med-add-slot" style="margin-top:8px;width:100%">+ Add Time Slot</button>
+            <button type="button" class="btn btn-ghost btn-full" id="med-add-slot" style="margin-top:10px">+ Add another time</button>
           </fieldset>
-          <div style="display:flex;gap:10px;flex-wrap:wrap">
-            <button class="btn btn-primary" id="med-save-btn" style="flex:1">Save Medication</button>
-            <button class="btn btn-ghost" id="med-cancel-btn" style="flex:1">Cancel</button>
-            <button class="btn btn-danger" id="med-delete-btn" style="display:none;flex:1">Remove</button>
+          <div class="dialog-actions">
+            <button class="btn btn-primary" id="med-save-btn">Save Medicine</button>
+            <button class="btn btn-ghost"   id="med-cancel-btn">Cancel</button>
+            <button class="btn btn-danger"  id="med-delete-btn" style="display:none">Remove Medicine</button>
           </div>
         </div>
       </dialog>
     </section>
 
+    <!-- ════ ICE / EMERGENCY CONTACTS ═════════════════ -->
     <section id="ice-contacts">
-      <button class="btn-back" onclick="history.back()" aria-label="Go back">← Back</button>
-      <h1 class="module-heading">ICE Contacts</h1>
-      <div style="padding:0 20px 12px">
-        <button class="btn btn-primary" id="ice-add-btn" aria-label="Add new contact">+ Add Contact</button>
+      <button class="btn-back" onclick="history.back()" aria-label="Go back">Back</button>
+      <h1 class="module-heading">🚨 Emergency Contacts</h1>
+      <div style="padding:0 16px 14px">
+        <button class="btn btn-primary" id="ice-add-btn">+ Add a Contact</button>
       </div>
       <div id="ice-list"></div>
-      <dialog id="ice-modal" aria-modal="true" style="border-radius:16px;border:none;padding:0;width:min(540px,95vw);max-height:90vh;overflow-y:auto">
-        <div style="padding:24px">
-          <h2 style="font-size:22px;color:var(--primary);margin-bottom:16px" id="ice-modal-title">Add Contact</h2>
+      <dialog id="ice-modal" aria-modal="true" aria-label="Contact details">
+        <div class="dialog-body">
+          <h2 id="ice-modal-title">Add Contact</h2>
           <input type="hidden" id="ice-id">
-          <label for="ice-name">Full Name *</label><input id="ice-name" type="text">
-          <label for="ice-role">Relationship / Role</label><input id="ice-role" type="text" placeholder="e.g. Daughter, Neurologist">
-          <label for="ice-phone">Phone</label><input id="ice-phone" type="tel">
-          <label for="ice-email">Email</label><input id="ice-email" type="email">
-          <label for="ice-notes">Notes</label><textarea id="ice-notes" rows="3" style="resize:vertical"></textarea>
-          <label style="display:flex;align-items:center;gap:8px;margin-bottom:16px;font-weight:normal;cursor:pointer">
-            <input type="checkbox" id="ice-is-ice" style="width:20px;height:20px;accent-color:var(--primary);margin-bottom:0">
-            Mark as ICE (In Case of Emergency)
+          <label for="ice-name">Full name *</label>
+          <input id="ice-name" type="text" autocapitalize="words">
+          <label for="ice-role">Who are they to you?</label>
+          <input id="ice-role" type="text" placeholder="e.g. Daughter, Neurologist">
+          <label for="ice-phone">Phone number</label>
+          <input id="ice-phone" type="tel">
+          <label for="ice-email">Email address</label>
+          <input id="ice-email" type="email">
+          <label for="ice-notes">Notes</label>
+          <textarea id="ice-notes" rows="3" placeholder="Any useful information..."></textarea>
+          <label style="display:flex;align-items:center;gap:12px;margin-bottom:20px;font-weight:normal;cursor:pointer;font-size:var(--font-base)">
+            <input type="checkbox" id="ice-is-ice" style="width:28px;height:28px;accent-color:var(--primary);margin-bottom:0;flex-shrink:0">
+            This is an emergency contact
           </label>
-          <label style="display:flex;align-items:center;gap:8px;margin-bottom:20px;font-weight:normal;cursor:pointer">
-            <input type="checkbox" id="ice-is-monitor" style="width:20px;height:20px;accent-color:var(--primary);margin-bottom:0">
-            Notify for missed medications
+          <label style="display:flex;align-items:center;gap:12px;margin-bottom:24px;font-weight:normal;cursor:pointer;font-size:var(--font-base)">
+            <input type="checkbox" id="ice-is-monitor" style="width:28px;height:28px;accent-color:var(--primary);margin-bottom:0;flex-shrink:0">
+            Notify if I miss a medicine
           </label>
-          <div style="display:flex;gap:10px;flex-wrap:wrap">
-            <button class="btn btn-primary" id="ice-save-btn" style="flex:1">Save</button>
-            <button class="btn btn-ghost" id="ice-cancel-btn" style="flex:1">Cancel</button>
-            <button class="btn btn-danger" id="ice-delete-btn" style="flex:1;display:none">Delete</button>
+          <div class="dialog-actions">
+            <button class="btn btn-primary" id="ice-save-btn">Save Contact</button>
+            <button class="btn btn-ghost"   id="ice-cancel-btn">Cancel</button>
+            <button class="btn btn-danger"  id="ice-delete-btn" style="display:none">Delete Contact</button>
           </div>
         </div>
       </dialog>
     </section>
 
+    <!-- ════ FOOD & GROCERY ════════════════════════════ -->
     <section id="food">
-      <button class="btn-back" onclick="history.back()">← Back</button>
-      <h1 class="module-heading">🥦 Food &amp; Grocery</h1>
-      <div style="display:flex;gap:10px;padding:0 20px 12px;flex-wrap:wrap">
+      <button class="btn-back" onclick="history.back()" aria-label="Go back">Back</button>
+      <h1 class="module-heading">🛒 Food &amp; Shopping</h1>
+      <div style="display:flex;gap:12px;padding:0 16px 14px;flex-wrap:wrap">
         <button class="btn btn-primary" id="food-tab-pantry">My Pantry</button>
-        <button class="btn btn-ghost" id="food-tab-list">Shopping List</button>
-        <button class="btn btn-ghost" id="food-tab-links">Helpful Links</button>
+        <button class="btn btn-ghost"   id="food-tab-list">Shopping List</button>
+        <button class="btn btn-ghost"   id="food-tab-links">Helpful Links</button>
       </div>
       <div id="food-view-pantry">
-        <div style="padding:0 20px 12px"><button class="btn btn-primary" id="food-add-item-btn">+ Add to Pantry</button></div>
+        <div style="padding:0 16px 14px"><button class="btn btn-primary" id="food-add-item-btn">+ Add to Pantry</button></div>
         <div id="food-pantry-list"></div>
       </div>
       <div id="food-view-list" style="display:none">
-        <div style="padding:0 20px 12px"><button class="btn btn-primary" id="food-add-shop-btn">+ Add to List</button></div>
+        <div style="padding:0 16px 14px"><button class="btn btn-primary" id="food-add-shop-btn">+ Add to List</button></div>
         <div id="food-shop-list"></div>
       </div>
-      <div id="food-view-links" style="display:none">
-        <div id="food-links-list"></div>
-      </div>
-      <!-- Pantry item modal -->
-      <dialog id="food-modal" aria-modal="true" style="border-radius:16px;border:none;padding:0;width:min(480px,95vw);max-height:90vh;overflow-y:auto">
-        <div style="padding:24px">
-          <h2 style="font-size:22px;color:var(--primary);margin-bottom:16px" id="food-modal-title">Add to Pantry</h2>
+      <div id="food-view-links" style="display:none"><div id="food-links-list"></div></div>
+      <dialog id="food-modal" aria-modal="true" aria-label="Pantry item">
+        <div class="dialog-body">
+          <h2 id="food-modal-title">Add to Pantry</h2>
           <input type="hidden" id="food-item-id">
-          <label for="food-item-name">Item Name *</label><input id="food-item-name" type="text" placeholder="e.g. Olive Oil">
+          <label for="food-item-name">Item name *</label>
+          <input id="food-item-name" type="text" placeholder="e.g. Olive Oil" autocapitalize="words">
           <label for="food-item-category">Category</label>
-          <select id="food-item-category" style="margin-bottom:16px">
+          <select id="food-item-category" style="margin-bottom:20px">
             <option>Fruits &amp; Vegetables</option><option>Proteins</option><option>Grains &amp; Bread</option>
             <option>Dairy</option><option>Beverages</option><option>Household</option><option>Other</option>
           </select>
-          <label for="food-item-qty">Quantity / Amount</label><input id="food-item-qty" type="text" placeholder="e.g. 2 cans">
-          <label style="display:flex;align-items:center;gap:8px;margin-bottom:20px;font-weight:normal;cursor:pointer">
-            <input type="checkbox" id="food-item-low" style="width:20px;height:20px;accent-color:var(--primary);margin-bottom:0">
-            Mark as running low
+          <label for="food-item-qty">Amount</label>
+          <input id="food-item-qty" type="text" placeholder="e.g. 2 cans">
+          <label style="display:flex;align-items:center;gap:12px;margin-bottom:24px;font-weight:normal;cursor:pointer;font-size:var(--font-base)">
+            <input type="checkbox" id="food-item-low" style="width:28px;height:28px;accent-color:var(--primary);margin-bottom:0;flex-shrink:0">
+            Running low — I need more
           </label>
-          <div style="display:flex;gap:10px;flex-wrap:wrap">
-            <button class="btn btn-primary" style="flex:1" id="food-save-btn">Save</button>
-            <button class="btn btn-ghost" style="flex:1" id="food-cancel-btn">Cancel</button>
-            <button class="btn btn-danger" id="food-delete-btn" style="flex:1;display:none">Remove</button>
+          <div class="dialog-actions">
+            <button class="btn btn-primary" id="food-save-btn">Save</button>
+            <button class="btn btn-ghost"   id="food-cancel-btn">Cancel</button>
+            <button class="btn btn-danger"  id="food-delete-btn" style="display:none">Remove</button>
           </div>
         </div>
       </dialog>
-      <!-- Shopping list item modal -->
-      <dialog id="food-shop-modal" aria-modal="true" style="border-radius:16px;border:none;padding:0;width:min(420px,95vw);max-height:90vh;overflow-y:auto">
-        <div style="padding:24px">
-          <h2 style="font-size:22px;color:var(--primary);margin-bottom:16px" id="food-shop-modal-title">Add to List</h2>
+      <dialog id="food-shop-modal" aria-modal="true" aria-label="Shopping list item">
+        <div class="dialog-body">
+          <h2 id="food-shop-modal-title">Add to Shopping List</h2>
           <input type="hidden" id="food-shop-id">
-          <label for="food-shop-name">Item *</label><input id="food-shop-name" type="text" placeholder="e.g. Bananas">
-          <label for="food-shop-qty">Amount</label><input id="food-shop-qty" type="text" placeholder="e.g. 1 bunch">
-          <div style="display:flex;gap:10px;flex-wrap:wrap">
-            <button class="btn btn-primary" style="flex:1" id="food-shop-save-btn">Save</button>
-            <button class="btn btn-ghost" style="flex:1" id="food-shop-cancel-btn">Cancel</button>
-            <button class="btn btn-danger" id="food-shop-delete-btn" style="flex:1;display:none">Remove</button>
+          <label for="food-shop-name">What do you need? *</label>
+          <input id="food-shop-name" type="text" placeholder="e.g. Bananas" autocapitalize="words">
+          <label for="food-shop-qty">How much?</label>
+          <input id="food-shop-qty" type="text" placeholder="e.g. 1 bunch">
+          <div class="dialog-actions">
+            <button class="btn btn-primary" id="food-shop-save-btn">Save</button>
+            <button class="btn btn-ghost"   id="food-shop-cancel-btn">Cancel</button>
+            <button class="btn btn-danger"  id="food-shop-delete-btn" style="display:none">Remove</button>
           </div>
         </div>
       </dialog>
     </section>
 
+    <!-- ════ PASSWORDS ════════════════════════════════ -->
     <section id="passwords">
-      <button class="btn-back" onclick="history.back()">← Back</button>
+      <button class="btn-back" onclick="history.back()" aria-label="Go back">Back</button>
       <h1 class="module-heading">🔑 Passwords</h1>
       <div id="pw-content"></div>
-      <dialog id="pw-modal" aria-modal="true" style="border-radius:16px;border:none;padding:0;width:min(520px,95vw);max-height:90vh;overflow-y:auto">
-        <div style="padding:24px">
-          <h2 style="font-size:22px;color:var(--primary);margin-bottom:16px" id="pw-modal-title">Add Password</h2>
+      <dialog id="pw-modal" aria-modal="true" aria-label="Password entry">
+        <div class="dialog-body">
+          <h2 id="pw-modal-title">Add Password</h2>
           <input type="hidden" id="pw-id">
-          <label for="pw-label">Label *</label><input id="pw-label" type="text" placeholder="e.g. Home WiFi">
+          <label for="pw-label">Label *</label>
+          <input id="pw-label" type="text" placeholder="e.g. Home WiFi" autocapitalize="words">
           <label for="pw-category">Category</label>
-          <select id="pw-category" style="margin-bottom:16px">
+          <select id="pw-category" style="margin-bottom:20px">
             <option>WiFi Networks</option><option>Streaming Services</option><option>Email</option><option>Other</option>
           </select>
-          <label for="pw-username">Username / Email</label><input id="pw-username" type="text" autocomplete="off">
-          <label for="pw-password">Password *</label><input id="pw-password" type="text" autocomplete="off" style="font-family:monospace">
-          <label for="pw-notes">Notes</label><textarea id="pw-notes" rows="2" style="resize:vertical"></textarea>
-          <div style="display:flex;gap:10px;flex-wrap:wrap">
-            <button class="btn btn-primary" style="flex:1" onclick="savePwEntry()">Save</button>
-            <button class="btn btn-ghost" style="flex:1" onclick="closePwModal()">Cancel</button>
-            <button class="btn btn-danger" id="pw-delete-btn" style="flex:1;display:none" onclick="deletePwEntry()">Delete</button>
+          <label for="pw-username">Username or email</label>
+          <input id="pw-username" type="text" autocomplete="off">
+          <label for="pw-password">Password *</label>
+          <input id="pw-password" type="text" autocomplete="off" style="font-family:monospace;font-size:20px">
+          <label for="pw-notes">Notes</label>
+          <textarea id="pw-notes" rows="2"></textarea>
+          <div class="dialog-actions">
+            <button class="btn btn-primary" onclick="savePwEntry()">Save</button>
+            <button class="btn btn-ghost"   onclick="closePwModal()">Cancel</button>
+            <button class="btn btn-danger"  id="pw-delete-btn" style="display:none" onclick="deletePwEntry()">Delete</button>
           </div>
         </div>
       </dialog>
     </section>
 
+    <!-- ════ BILLS ════════════════════════════════════ -->
     <section id="bills">
-      <button class="btn-back" onclick="history.back()">← Back</button>
-      <h1 class="module-heading">💳 Bills &amp; Banking</h1>
-      <div style="padding:0 20px 12px"><button class="btn btn-primary" id="bills-add-btn">+ Add Bill</button></div>
+      <button class="btn-back" onclick="history.back()" aria-label="Go back">Back</button>
+      <h1 class="module-heading">💳 Bills &amp; Money</h1>
+      <div style="padding:0 16px 14px"><button class="btn btn-primary" id="bills-add-btn">+ Add a Bill</button></div>
       <div id="bills-list"></div>
-      <dialog id="bills-modal" aria-modal="true" style="border-radius:16px;border:none;padding:0;width:min(520px,95vw);max-height:90vh;overflow-y:auto">
-        <div style="padding:24px">
-          <h2 style="font-size:22px;color:var(--primary);margin-bottom:16px" id="bills-modal-title">Add Bill</h2>
+      <dialog id="bills-modal" aria-modal="true" aria-label="Bill details">
+        <div class="dialog-body">
+          <h2 id="bills-modal-title">Add a Bill</h2>
           <input type="hidden" id="bills-id">
-          <label for="bills-name">Bill Name *</label><input id="bills-name" type="text" placeholder="e.g. Electric Bill">
+          <label for="bills-name">Bill name *</label>
+          <input id="bills-name" type="text" placeholder="e.g. Electric Bill" autocapitalize="words">
           <label for="bills-category">Category</label>
-          <select id="bills-category" style="margin-bottom:16px">
+          <select id="bills-category" style="margin-bottom:20px">
             <option>Housing</option><option>Utilities</option><option>Insurance</option>
             <option>Subscriptions</option><option>Medical</option><option>Phone &amp; Internet</option><option>Other</option>
           </select>
-          <label for="bills-amount">Amount ($)</label><input id="bills-amount" type="number" placeholder="e.g. 120" min="0" step="0.01">
-          <label for="bills-frequency">Frequency</label>
-          <select id="bills-frequency" style="margin-bottom:16px">
+          <label for="bills-amount">Amount ($)</label>
+          <input id="bills-amount" type="number" placeholder="e.g. 120" min="0" step="0.01">
+          <label for="bills-frequency">How often?</label>
+          <select id="bills-frequency" style="margin-bottom:20px">
             <option>Monthly</option><option>Weekly</option><option>Quarterly</option><option>Yearly</option><option>One-time</option>
           </select>
-          <label for="bills-due">Next Due Date</label><input id="bills-due" type="date">
-          <label style="display:flex;align-items:center;gap:8px;margin-bottom:16px;font-weight:normal;cursor:pointer">
-            <input type="checkbox" id="bills-autopay" style="width:20px;height:20px;accent-color:var(--primary);margin-bottom:0">
-            Auto-pay enabled
+          <label for="bills-due">Next due date</label>
+          <input id="bills-due" type="date">
+          <label style="display:flex;align-items:center;gap:12px;margin-bottom:20px;font-weight:normal;cursor:pointer;font-size:var(--font-base)">
+            <input type="checkbox" id="bills-autopay" style="width:28px;height:28px;accent-color:var(--primary);margin-bottom:0;flex-shrink:0">
+            Auto-pay is turned on
           </label>
-          <label for="bills-notes">Notes</label><textarea id="bills-notes" rows="2" style="resize:vertical"></textarea>
-          <div style="display:flex;gap:10px;flex-wrap:wrap">
-            <button class="btn btn-primary" style="flex:1" id="bills-save-btn">Save</button>
-            <button class="btn btn-ghost" style="flex:1" id="bills-cancel-btn">Cancel</button>
-            <button class="btn btn-danger" id="bills-delete-btn" style="flex:1;display:none">Delete</button>
+          <label for="bills-notes">Notes</label>
+          <textarea id="bills-notes" rows="2"></textarea>
+          <div class="dialog-actions">
+            <button class="btn btn-primary" id="bills-save-btn">Save Bill</button>
+            <button class="btn btn-ghost"   id="bills-cancel-btn">Cancel</button>
+            <button class="btn btn-danger"  id="bills-delete-btn" style="display:none">Delete Bill</button>
           </div>
         </div>
       </dialog>
     </section>
 
+    <!-- ════ BRAIN FITNESS ════════════════════════════ -->
     <section id="puzzles">
-      <button class="btn-back" onclick="history.back()">← Back</button>
-      <h1 class="module-heading">🧩 Brain Fitness</h1>
+      <button class="btn-back" onclick="history.back()" aria-label="Go back">Back</button>
+      <h1 class="module-heading">🧩 Brain Games</h1>
       <div id="puzzles-content"></div>
     </section>
 
+    <!-- ════ WELLNESS ═════════════════════════════════ -->
     <section id="wellness">
-      <button class="btn-back" onclick="history.back()">← Back</button>
-      <h1 class="module-heading">🌿 Calm &amp; Wellness</h1>
+      <button class="btn-back" onclick="history.back()" aria-label="Go back">Back</button>
+      <h1 class="module-heading">🌿 Calm &amp; Rest</h1>
       <div id="wellness-content"></div>
     </section>
 
+    <!-- ════ DOCTOR'S NOTES ═══════════════════════════ -->
     <section id="doctors-notes">
-      <button class="btn-back" onclick="history.back()">← Back</button>
-      <h1 class="module-heading">📋 Doctor's Notes</h1>
-      <div style="padding:0 20px 12px"><button class="btn btn-primary" id="notes-add-btn">+ Add Note</button></div>
+      <button class="btn-back" onclick="history.back()" aria-label="Go back">Back</button>
+      <h1 class="module-heading">📋 Doctor Visits</h1>
+      <div style="padding:0 16px 14px"><button class="btn btn-primary" id="notes-add-btn">+ Add a Note</button></div>
       <div id="notes-list"></div>
-      <dialog id="notes-modal" aria-modal="true" style="border-radius:16px;border:none;padding:0;width:min(580px,95vw);max-height:90vh;overflow-y:auto">
-        <div style="padding:24px">
-          <h2 style="font-size:22px;color:var(--primary);margin-bottom:16px" id="notes-modal-title">Add Note</h2>
+      <dialog id="notes-modal" aria-modal="true" aria-label="Doctor visit note">
+        <div class="dialog-body">
+          <h2 id="notes-modal-title">Add a Note</h2>
           <input type="hidden" id="notes-id">
-          <label for="notes-title">Title *</label><input id="notes-title" type="text" placeholder="e.g. Neurologist Visit">
-          <label for="notes-date">Date</label><input id="notes-date" type="date">
-          <label for="notes-doctor">Doctor / Clinic</label><input id="notes-doctor" type="text" placeholder="e.g. Dr. Patel, Movement Clinic">
-          <label for="notes-body">Notes *</label><textarea id="notes-body" rows="6" style="resize:vertical" placeholder="What was discussed, instructions, follow-ups..."></textarea>
-          <label for="notes-followup">Follow-up Date</label><input id="notes-followup" type="date">
-          <div style="display:flex;gap:10px;flex-wrap:wrap">
-            <button class="btn btn-primary" style="flex:1" id="notes-save-btn">Save</button>
-            <button class="btn btn-ghost" style="flex:1" id="notes-cancel-btn">Cancel</button>
-            <button class="btn btn-danger" id="notes-delete-btn" style="flex:1;display:none">Delete</button>
+          <label for="notes-title">Title *</label>
+          <input id="notes-title" type="text" placeholder="e.g. Neurologist Visit" autocapitalize="words">
+          <label for="notes-date">Date of visit</label>
+          <input id="notes-date" type="date">
+          <label for="notes-doctor">Doctor or clinic</label>
+          <input id="notes-doctor" type="text" placeholder="e.g. Dr. Patel" autocapitalize="words">
+          <label for="notes-body">What was discussed *</label>
+          <textarea id="notes-body" rows="6" placeholder="Write what your doctor said, any instructions, and follow-up plans..."></textarea>
+          <label for="notes-followup">Follow-up date</label>
+          <input id="notes-followup" type="date">
+          <div class="dialog-actions">
+            <button class="btn btn-primary" id="notes-save-btn">Save Note</button>
+            <button class="btn btn-ghost"   id="notes-cancel-btn">Cancel</button>
+            <button class="btn btn-danger"  id="notes-delete-btn" style="display:none">Delete Note</button>
           </div>
         </div>
       </dialog>
     </section>
 
+    <!-- ════ RECIPES ══════════════════════════════════ -->
     <section id="recipes">
-      <button class="btn-back" onclick="history.back()">← Back</button>
+      <button class="btn-back" onclick="history.back()" aria-label="Go back">Back</button>
       <h1 class="module-heading">🍲 Recipes</h1>
-      <div style="display:flex;gap:10px;padding:0 20px 12px;flex-wrap:wrap">
+      <div style="display:flex;gap:12px;padding:0 16px 14px;flex-wrap:wrap">
         <button class="btn btn-primary" id="recipes-tab-all">All Recipes</button>
-        <button class="btn btn-ghost" id="recipes-tab-favs">Favourites</button>
+        <button class="btn btn-ghost"   id="recipes-tab-favs">Favourites</button>
         <button class="btn btn-primary" id="recipes-add-btn" style="margin-left:auto">+ Add Recipe</button>
       </div>
       <div id="recipes-list"></div>
       <div id="recipe-detail" style="display:none"></div>
-      <dialog id="recipes-modal" aria-modal="true" style="border-radius:16px;border:none;padding:0;width:min(600px,95vw);max-height:90vh;overflow-y:auto">
-        <div style="padding:24px">
-          <h2 style="font-size:22px;color:var(--primary);margin-bottom:16px" id="recipes-modal-title">Add Recipe</h2>
+      <dialog id="recipes-modal" aria-modal="true" aria-label="Recipe details">
+        <div class="dialog-body">
+          <h2 id="recipes-modal-title">Add Recipe</h2>
           <input type="hidden" id="recipe-id">
-          <label for="recipe-name">Recipe Name *</label><input id="recipe-name" type="text" placeholder="e.g. Salmon with Vegetables">
+          <label for="recipe-name">Recipe name *</label>
+          <input id="recipe-name" type="text" placeholder="e.g. Salmon with Vegetables" autocapitalize="words">
           <label for="recipe-category">Category</label>
-          <select id="recipe-category" style="margin-bottom:16px">
+          <select id="recipe-category" style="margin-bottom:20px">
             <option>Breakfast</option><option>Lunch</option><option>Dinner</option><option>Snack</option><option>Dessert</option><option>Drink</option>
           </select>
-          <label for="recipe-servings">Servings</label><input id="recipe-servings" type="text" placeholder="e.g. 2">
-          <label for="recipe-ingredients">Ingredients *</label><textarea id="recipe-ingredients" rows="5" style="resize:vertical" placeholder="One ingredient per line"></textarea>
-          <label for="recipe-steps">Instructions *</label><textarea id="recipe-steps" rows="6" style="resize:vertical" placeholder="Step by step instructions..."></textarea>
-          <label for="recipe-notes">Notes</label><textarea id="recipe-notes" rows="2" style="resize:vertical" placeholder="Tips, substitutions..."></textarea>
-          <label style="display:flex;align-items:center;gap:8px;margin-bottom:20px;font-weight:normal;cursor:pointer">
-            <input type="checkbox" id="recipe-fav" style="width:20px;height:20px;accent-color:var(--primary);margin-bottom:0">
+          <label for="recipe-servings">Serves how many?</label>
+          <input id="recipe-servings" type="text" placeholder="e.g. 2">
+          <label for="recipe-ingredients">Ingredients (one per line) *</label>
+          <textarea id="recipe-ingredients" rows="5" placeholder="1 cup oats&#10;1 cup milk&#10;½ cup blueberries"></textarea>
+          <label for="recipe-steps">Instructions *</label>
+          <textarea id="recipe-steps" rows="6" placeholder="Step by step instructions..."></textarea>
+          <label for="recipe-notes">Tips or notes</label>
+          <textarea id="recipe-notes" rows="2" placeholder="Helpful tips, substitutions..."></textarea>
+          <label style="display:flex;align-items:center;gap:12px;margin-bottom:24px;font-weight:normal;cursor:pointer;font-size:var(--font-base)">
+            <input type="checkbox" id="recipe-fav" style="width:28px;height:28px;accent-color:var(--primary);margin-bottom:0;flex-shrink:0">
             Add to Favourites
           </label>
-          <div style="display:flex;gap:10px;flex-wrap:wrap">
-            <button class="btn btn-primary" style="flex:1" id="recipes-save-btn">Save</button>
-            <button class="btn btn-ghost" style="flex:1" id="recipes-cancel-btn">Cancel</button>
-            <button class="btn btn-danger" id="recipes-delete-btn" style="flex:1;display:none">Delete</button>
+          <div class="dialog-actions">
+            <button class="btn btn-primary" id="recipes-save-btn">Save Recipe</button>
+            <button class="btn btn-ghost"   id="recipes-cancel-btn">Cancel</button>
+            <button class="btn btn-danger"  id="recipes-delete-btn" style="display:none">Delete Recipe</button>
           </div>
         </div>
       </dialog>
     </section>
 
+    <!-- ════ TRANSPORTATION ═══════════════════════════ -->
     <section id="transportation">
-      <button class="btn-back" onclick="history.back()">← Back</button>
-      <h1 class="module-heading">🚗 Transportation</h1>
+      <button class="btn-back" onclick="history.back()" aria-label="Go back">Back</button>
+      <h1 class="module-heading">🚗 Getting Around</h1>
       <div id="transport-content"></div>
     </section>
 
+    <!-- ════ COMMUNITY ════════════════════════════════ -->
     <section id="community">
-      <button class="btn-back" onclick="history.back()">← Back</button>
+      <button class="btn-back" onclick="history.back()" aria-label="Go back">Back</button>
       <h1 class="module-heading">🤝 Community</h1>
       <div id="community-content"></div>
     </section>
 
+    <!-- ════ HELPLINES ════════════════════════════════ -->
     <section id="helplines">
-      <button class="btn-back" onclick="history.back()">← Back</button>
+      <button class="btn-back" onclick="history.back()" aria-label="Go back">Back</button>
       <h1 class="module-heading">📞 Helplines</h1>
       <div id="helplines-list"></div>
     </section>
 
+    <!-- ════ BIRTHDAYS ════════════════════════════════ -->
     <section id="birthdays">
-      <button class="btn-back" onclick="history.back()">← Back</button>
+      <button class="btn-back" onclick="history.back()" aria-label="Go back">Back</button>
       <h1 class="module-heading">🎂 Birthdays</h1>
-      <div style="padding:0 20px 12px"><button class="btn btn-primary" id="bday-add-btn">+ Add Birthday</button></div>
+      <div style="padding:0 16px 14px"><button class="btn btn-primary" id="bday-add-btn">+ Add a Birthday</button></div>
       <div id="bday-list"></div>
-      <dialog id="bday-modal" aria-modal="true" style="border-radius:16px;border:none;padding:0;width:min(480px,95vw);max-height:90vh;overflow-y:auto">
-        <div style="padding:24px">
-          <h2 style="font-size:22px;color:var(--primary);margin-bottom:16px" id="bday-modal-title">Add Birthday</h2>
+      <dialog id="bday-modal" aria-modal="true" aria-label="Birthday details">
+        <div class="dialog-body">
+          <h2 id="bday-modal-title">Add a Birthday</h2>
           <input type="hidden" id="bday-id">
-          <label for="bday-name">Name *</label><input id="bday-name" type="text">
-          <label for="bday-date">Birthday *</label><input id="bday-date" type="date">
-          <label for="bday-relation">Relationship</label><input id="bday-relation" type="text" placeholder="e.g. Daughter">
-          <label for="bday-notes">Notes</label><textarea id="bday-notes" rows="2" style="resize:vertical"></textarea>
-          <div style="display:flex;gap:10px;flex-wrap:wrap">
-            <button class="btn btn-primary" style="flex:1" id="bday-save-btn">Save</button>
-            <button class="btn btn-ghost" style="flex:1" id="bday-cancel-btn">Cancel</button>
-            <button class="btn btn-danger" id="bday-delete-btn" style="flex:1;display:none">Delete</button>
+          <label for="bday-name">Name *</label>
+          <input id="bday-name" type="text" autocapitalize="words">
+          <label for="bday-date">Birthday *</label>
+          <input id="bday-date" type="date">
+          <label for="bday-relation">Who are they to you?</label>
+          <input id="bday-relation" type="text" placeholder="e.g. Daughter">
+          <label for="bday-notes">Notes</label>
+          <textarea id="bday-notes" rows="2"></textarea>
+          <div class="dialog-actions">
+            <button class="btn btn-primary" id="bday-save-btn">Save Birthday</button>
+            <button class="btn btn-ghost"   id="bday-cancel-btn">Cancel</button>
+            <button class="btn btn-danger"  id="bday-delete-btn" style="display:none">Delete</button>
           </div>
         </div>
       </dialog>
     </section>
 
+    <!-- ════ PETS ═════════════════════════════════════ -->
     <section id="pets">
-      <button class="btn-back" onclick="history.back()">← Back</button>
-      <h1 class="module-heading">🐾 Pet Care</h1>
-      <div style="padding:0 20px 12px"><button class="btn btn-primary" id="pet-add-btn">+ Add Pet</button></div>
+      <button class="btn-back" onclick="history.back()" aria-label="Go back">Back</button>
+      <h1 class="module-heading">🐾 My Pets</h1>
+      <div style="padding:0 16px 14px"><button class="btn btn-primary" id="pet-add-btn">+ Add a Pet</button></div>
       <div id="pet-list"></div>
-      <dialog id="pet-modal" aria-modal="true" style="border-radius:16px;border:none;padding:0;width:min(520px,95vw);max-height:90vh;overflow-y:auto">
-        <div style="padding:24px">
-          <h2 style="font-size:22px;color:var(--primary);margin-bottom:16px" id="pet-modal-title">Add Pet</h2>
+      <dialog id="pet-modal" aria-modal="true" aria-label="Pet details">
+        <div class="dialog-body">
+          <h2 id="pet-modal-title">Add a Pet</h2>
           <input type="hidden" id="pet-id">
-          <label for="pet-name">Pet Name *</label><input id="pet-name" type="text">
-          <label for="pet-species">Type of Animal</label><input id="pet-species" type="text" placeholder="e.g. Dog, Cat, Bird">
-          <label for="pet-breed">Breed</label><input id="pet-breed" type="text">
-          <label for="pet-vet">Vet / Clinic</label><input id="pet-vet" type="text">
-          <label for="pet-vet-phone">Vet Phone</label><input id="pet-vet-phone" type="tel">
-          <label for="pet-notes">Notes</label><textarea id="pet-notes" rows="3" style="resize:vertical" placeholder="Food, medication, special needs..."></textarea>
-          <div style="display:flex;gap:10px;flex-wrap:wrap">
-            <button class="btn btn-primary" style="flex:1" id="pet-save-btn">Save</button>
-            <button class="btn btn-ghost" style="flex:1" id="pet-cancel-btn">Cancel</button>
-            <button class="btn btn-danger" id="pet-delete-btn" style="flex:1;display:none">Delete</button>
+          <label for="pet-name">Pet's name *</label>
+          <input id="pet-name" type="text" autocapitalize="words">
+          <label for="pet-species">Type of animal</label>
+          <input id="pet-species" type="text" placeholder="e.g. Dog, Cat, Bird" autocapitalize="words">
+          <label for="pet-breed">Breed</label>
+          <input id="pet-breed" type="text" autocapitalize="words">
+          <label for="pet-vet">Vet or clinic name</label>
+          <input id="pet-vet" type="text" autocapitalize="words">
+          <label for="pet-vet-phone">Vet phone number</label>
+          <input id="pet-vet-phone" type="tel">
+          <label for="pet-notes">Notes</label>
+          <textarea id="pet-notes" rows="3" placeholder="Food, medicines, special needs..."></textarea>
+          <div class="dialog-actions">
+            <button class="btn btn-primary" id="pet-save-btn">Save Pet</button>
+            <button class="btn btn-ghost"   id="pet-cancel-btn">Cancel</button>
+            <button class="btn btn-danger"  id="pet-delete-btn" style="display:none">Remove Pet</button>
           </div>
         </div>
       </dialog>
     </section>
 
+    <!-- ════ SETTINGS ════════════════════════════════ -->
     <section id="settings">
-      <button class="btn-back" onclick="history.back()">← Back</button>
+      <button class="btn-back" onclick="history.back()" aria-label="Go back">Back</button>
       <h1 class="module-heading">⚙ Settings</h1>
       <div id="settings-content"></div>
     </section>
 
   </main>
 
+  <!-- ── BOTTOM NAVIGATION ────────────────────────── -->
+  <nav class="bottom-nav" aria-label="Main navigation">
+    <a href="#home" class="bnav-item" id="bnav-home" aria-label="Home">
+      <span class="bnav-icon">🏠</span>
+      <span class="bnav-label">Home</span>
+    </a>
+    <a href="#my-health" class="bnav-item" id="bnav-health" aria-label="My Health">
+      <span class="bnav-icon">💊</span>
+      <span class="bnav-label">My Health</span>
+    </a>
+    <a href="#my-life" class="bnav-item" id="bnav-life" aria-label="My Life">
+      <span class="bnav-icon">🌟</span>
+      <span class="bnav-label">My Life</span>
+    </a>
+    <a href="#help-hub" class="bnav-item" id="bnav-help" aria-label="Help and Support">
+      <span class="bnav-icon">📞</span>
+      <span class="bnav-label">Help</span>
+    </a>
+  </nav>
+
+  <!-- ── SCRIPTS ──────────────────────────────────── -->
   <script src="js/storage.js"></script>
   <script src="js/seed.js"></script>
   <script src="js/clock.js"></script>
   <script src="js/modules/onboarding.js"></script>
   <script src="js/modules/home.js"></script>
+  <script src="js/modules/hub.js"></script>
   <script src="js/modules/ice-contacts.js"></script>
   <script src="js/modules/medications.js"></script>
   <script src="js/modules/calendar.js"></script>

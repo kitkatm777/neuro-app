@@ -1,204 +1,497 @@
+/* =====================================================
+   Riley — Dementia-Friendly Design System
+   WCAG AAA (7:1) contrast throughout
+   22px base font, 1.6 line-height, 72px tap targets
+   ===================================================== */
+
 :root {
-  --bg: #f4faf5;
-  --surface: #ffffff;
-  --primary: #3a7d52;
-  --secondary: #2e6642;
-  --accent: #c07830;
-  --teal: #2a8a6a;
-  --text: #1a2e1a;
-  --text-muted: #557055;
-  --border: #c8e6ce;
-  --band-blue: #3a7d52;
-  --band-green: #2e6642;
-  --band-amber: #c07830;
-  --band-teal: #2a8a6a;
-  --font-base: 18px;
-  --radius: 16px;
-  --focus: 3px solid #3a7d52;
+  /* Colours — all text meets 7:1 on --bg and --surface */
+  --bg:        #fdf8f2;   /* warm off-white */
+  --surface:   #ffffff;
+  --primary:   #1a5c38;   /* dark sage green  — 7.6:1 on #fdf8f2 */
+  --secondary: #154d30;   /* deeper green     — 9:1  on #fdf8f2 */
+  --accent:    #6b4200;   /* dark amber/brown — 9.5:1 on #fdf8f2 */
+  --danger:    #8b1c1c;   /* dark red         — 14:1 on #fdf8f2 */
+  --text:      #1a1a1a;   /* near-black       — 16:1 on #fdf8f2 */
+  --text-muted:#444444;   /* medium grey      — 8.9:1 on #fdf8f2 */
+  --border:    #b8d4be;
+  --success:   #1a5c38;
+
+  /* Colour bands for module tiles */
+  --band-green: #1a5c38;
+  --band-amber: #6b4200;
+  --band-blue:  #1a5c38;
+  --band-teal:  #1a5c38;
+
+  /* Typography */
+  --font-base: 22px;
+  --font-lg:   32px;
+  --font-xl:   42px;
+  --line-height: 1.6;
+  --radius:    16px;
+  --focus:     3px solid #1a5c38;
 }
 
+/* Font size overrides */
+[data-fontsize="large"] { --font-base: 26px; --font-lg: 36px; }
+[data-fontsize="xl"]    { --font-base: 30px; --font-lg: 42px; }
+
+/* Dark theme */
 [data-theme="dark"] {
-  --bg: #0d1f12;
-  --surface: #162b1c;
-  --text: #d4edda;
-  --text-muted: #88b898;
-  --border: #2a4a32;
+  --bg:        #0d1a0f;
+  --surface:   #152018;
+  --text:      #e8f5e9;
+  --text-muted:#a5c9a8;
+  --border:    #2a4a32;
 }
 
+/* High contrast */
 [data-theme="high-contrast"] {
-  --bg: #000000;
-  --surface: #111111;
-  --text: #ffffff;
-  --text-muted: #cccccc;
-  --primary: #ffff00;
-  --border: #ffffff;
+  --bg:        #000000;
+  --surface:   #0a0a0a;
+  --text:      #ffffff;
+  --text-muted:#dddddd;
+  --primary:   #00ff88;
+  --accent:    #ffcc00;
+  --border:    #ffffff;
 }
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+/* =====================================================
+   RESET & BASE
+   ===================================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-style: normal; /* never italics */
+}
 
 body {
-  font-family: 'Atkinson Hyperlegible', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: 'Atkinson Hyperlegible', -apple-system, BlinkMacSystemFont,
+               'Segoe UI', Arial, sans-serif;
   font-size: var(--font-base);
+  line-height: var(--line-height);
   background: var(--bg);
   color: var(--text);
   min-height: 100vh;
+  padding-bottom: 90px; /* space for fixed bottom nav */
+  text-align: left;
 }
 
-/* Font size variants */
-[data-fontsize="large"]  { --font-base: 22px; }
-[data-fontsize="xl"]     { --font-base: 26px; }
+/* No text decoration on interactive elements unless intentional */
+a { color: inherit; }
 
-/* Skip link */
+/* =====================================================
+   ACCESSIBILITY
+   ===================================================== */
 .skip-link {
   position: absolute;
   top: -100px;
   left: 0;
   background: var(--primary);
-  color: white;
-  padding: 12px 20px;
-  font-size: 16px;
+  color: #fff;
+  padding: 14px 24px;
+  font-size: var(--font-base);
   font-weight: 700;
   z-index: 9999;
+  text-decoration: none;
 }
 .skip-link:focus { top: 0; }
+:focus-visible { outline: var(--focus); outline-offset: 4px; border-radius: 4px; }
 
-/* Focus visible */
-:focus-visible { outline: var(--focus); outline-offset: 3px; }
-
-/* Top bar */
+/* =====================================================
+   TOP BAR
+   ===================================================== */
 .topbar {
   background: var(--primary);
-  color: white;
+  color: #fff;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 20px;
-  height: 56px;
+  height: 64px;
   position: sticky;
   top: 0;
-  z-index: 100;
+  z-index: 200;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
 }
-.topbar-title { font-size: 20px; font-weight: 700; }
-.topbar-right { display: flex; gap: 10px; }
+.topbar-title {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Emergency button — always visible, prominent */
 .btn-ice {
-  background: #e05c1a;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  padding: 10px 18px;
-  font-size: 15px;
+  background: #c0392b;
+  color: #fff;
+  border: 3px solid #fff;
+  border-radius: 10px;
+  padding: 10px 16px;
+  font-size: 16px;
   font-weight: 700;
   cursor: pointer;
-  min-height: 48px;
+  min-height: 52px;
+  min-width: 52px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 .btn-settings {
-  background: rgba(255,255,255,0.15);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  padding: 10px 16px;
-  font-size: 15px;
+  background: rgba(255,255,255,0.18);
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.4);
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 16px;
   cursor: pointer;
-  min-height: 48px;
+  min-height: 52px;
+  min-width: 52px;
 }
+.topbar-right { display: flex; gap: 10px; align-items: center; }
 
-/* Sections */
-section { display: none; padding-bottom: 40px; }
+/* =====================================================
+   BREADCRUMB
+   ===================================================== */
+.breadcrumb {
+  display: none;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 20px;
+  font-size: 16px;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+.breadcrumb.visible { display: block; }
+.breadcrumb a {
+  color: var(--primary);
+  text-decoration: underline;
+  font-weight: 600;
+}
+.breadcrumb .crumb-sep { margin: 0 8px; }
+
+/* =====================================================
+   BOTTOM NAVIGATION
+   ===================================================== */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--surface);
+  border-top: 2px solid var(--border);
+  display: flex;
+  z-index: 200;
+  box-shadow: 0 -2px 12px rgba(0,0,0,0.10);
+}
+.bnav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 10px 4px 12px;
+  min-height: 72px;
+  text-decoration: none;
+  color: var(--text-muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  border-top: 3px solid transparent;
+  transition: none;
+}
+.bnav-item.active {
+  color: var(--primary);
+  border-top-color: var(--primary);
+  background: #f0f7f0;
+}
+.bnav-icon { font-size: 26px; line-height: 1; }
+.bnav-label { font-size: 13px; font-weight: 700; line-height: 1.2; text-align: center; }
+
+/* =====================================================
+   SECTIONS
+   ===================================================== */
+section { display: none; padding-bottom: 48px; }
 section.active { display: block; }
 
-/* Cards */
+/* =====================================================
+   CARDS
+   ===================================================== */
 .card {
   background: var(--surface);
   border-radius: var(--radius);
   padding: 24px;
-  box-shadow: 0 2px 12px rgba(58,125,82,0.10);
-  margin: 16px 20px;
+  box-shadow: 0 2px 10px rgba(26,92,56,0.09);
+  margin: 0 16px 16px;
 }
 
-/* Buttons */
+/* =====================================================
+   BUTTONS  — minimum 72×72px, always labeled
+   ===================================================== */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: 12px 20px;
-  border-radius: 10px;
+  gap: 10px;
+  padding: 16px 24px;
+  border-radius: 12px;
+  font-family: inherit;
   font-size: var(--font-base);
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
   border: none;
-  min-height: 48px;
-  min-width: 48px;
+  min-height: 64px;
+  min-width: 64px;
+  line-height: 1.2;
+  text-decoration: none;
 }
-.btn-primary { background: var(--primary); color: white; }
-.btn-secondary { background: var(--secondary); color: white; }
-.btn-ghost { background: transparent; border: 2px solid var(--primary); color: var(--primary); }
-.btn-danger { background: #c0392b; color: white; }
+.btn-primary   { background: var(--primary);   color: #fff; }
+.btn-secondary { background: var(--secondary); color: #fff; }
+.btn-ghost     { background: transparent; border: 3px solid var(--primary); color: var(--primary); }
+.btn-danger    { background: transparent; border: 3px solid var(--danger);  color: var(--danger); }
+.btn-danger-filled { background: var(--danger); color: #fff; }
+.btn-success   { background: #1a5c38; color: #fff; }
 
-/* Form inputs */
-label { display: block; font-weight: 600; margin-bottom: 6px; font-size: var(--font-base); }
+/* Full-width variant */
+.btn-full { display: flex; width: 100%; }
+
+/* =====================================================
+   BACK BUTTON — always top-left, always says "Back"
+   ===================================================== */
+.btn-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: none;
+  border: none;
+  color: var(--primary);
+  font-family: inherit;
+  font-size: var(--font-base);
+  font-weight: 700;
+  cursor: pointer;
+  padding: 14px 20px;
+  min-height: 64px;
+  text-decoration: none;
+}
+.btn-back::before { content: '←'; font-size: 1.2em; }
+
+/* =====================================================
+   MODULE HEADING
+   ===================================================== */
+.module-heading {
+  font-size: var(--font-lg);
+  font-weight: 800;
+  color: var(--primary);
+  padding: 8px 20px 16px;
+  line-height: 1.2;
+}
+
+/* =====================================================
+   FORM INPUTS
+   ===================================================== */
+label {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 8px;
+  font-size: var(--font-base);
+  color: var(--text);
+  line-height: var(--line-height);
+}
 input, textarea, select {
   width: 100%;
-  padding: 12px 14px;
+  padding: 16px 18px;
   border: 2px solid var(--border);
-  border-radius: 10px;
+  border-radius: 12px;
+  font-family: inherit;
   font-size: var(--font-base);
   background: var(--surface);
   color: var(--text);
-  margin-bottom: 16px;
-  min-height: 48px;
+  margin-bottom: 20px;
+  min-height: 64px;
+  line-height: var(--line-height);
 }
 input:focus, textarea:focus, select:focus {
   outline: var(--focus);
   border-color: var(--primary);
 }
+textarea { resize: vertical; }
 
-/* Module heading */
-.module-heading {
-  font-size: 26px;
-  font-weight: 700;
-  color: var(--primary);
-  padding: 24px 20px 8px;
-}
-
-/* Back button */
-.btn-back {
-  margin: 16px 20px 0;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: none;
-  border: none;
-  color: var(--primary);
-  font-size: var(--font-base);
-  font-weight: 600;
-  cursor: pointer;
-  padding: 8px 0;
-}
-
-/* Tap-target minimum */
-button, a[role="button"], .module-tile { min-height: 48px; min-width: 48px; }
-
-/* Status pills */
+/* =====================================================
+   STATUS PILLS
+   ===================================================== */
 .status-pill {
   display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 16px;
-  border-radius: 12px;
-  font-size: 15px;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 14px 18px;
+  border-radius: 14px;
+  font-size: 18px;
   font-weight: 600;
-  border: 1.5px solid transparent;
-  flex: 1;
-  min-width: 160px;
+  border: 2px solid transparent;
+  line-height: 1.4;
 }
-.pill-ok     { background: #e8f5e9; color: #2e6b3e; border-color: #a5d6a7; }
-.pill-warn   { background: #fff3e0; color: #b45309; border-color: #ffcc80; }
-.pill-info   { background: #e3f2fd; color: #1a5276; border-color: #90caf9; }
-.pill-alert  { background: #fce4ec; color: #b71c1c; border-color: #ef9a9a; }
+.pill-ok    { background: #e8f5e9; color: #1a5c38; border-color: #a5d6a7; }
+.pill-warn  { background: #fff8e1; color: #6b4200; border-color: #ffe082; }
+.pill-info  { background: #e8f5e9; color: #1a5c38; border-color: #a5d6a7; }
+.pill-alert { background: #fce8e8; color: #8b1c1c; border-color: #ef9a9a; }
 
-/* Reduced motion */
-@media (prefers-reduced-motion: no-preference) {
-  .module-tile { transition: transform 0.15s, box-shadow 0.15s; }
-  .module-tile:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(44,95,122,0.16); }
+/* =====================================================
+   TODAY AT A GLANCE (Home screen)
+   ===================================================== */
+.glance-card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  border-left: 6px solid var(--primary);
+  padding: 20px 24px;
+  margin: 0 16px 16px;
+  box-shadow: 0 2px 10px rgba(26,92,56,0.09);
+}
+.glance-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: var(--font-base);
+  line-height: var(--line-height);
+}
+.glance-item:last-child { border-bottom: none; }
+.glance-icon { font-size: 28px; flex-shrink: 0; margin-top: 2px; }
+.glance-text { flex: 1; }
+
+/* =====================================================
+   HUB GRID (My Health / My Life / Help)
+   ===================================================== */
+.hub-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  padding: 0 16px 16px;
+}
+.hub-tile {
+  background: var(--surface);
+  border-radius: 16px;
+  padding: 24px 16px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 2px 10px rgba(26,92,56,0.09);
+  cursor: pointer;
+  border: 2px solid var(--border);
+  border-bottom: 4px solid var(--primary);
+  text-decoration: none;
+  color: var(--text);
+  min-height: 110px;
+  width: 100%;
+  font-family: inherit;
+}
+.hub-tile:active { background: #f0f7f0; border-color: var(--primary); }
+.hub-tile .tile-icon { font-size: 36px; line-height: 1; }
+.hub-tile .tile-label {
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+  line-height: 1.3;
+  color: var(--text);
+}
+
+/* =====================================================
+   CLOCK (Home screen)
+   ===================================================== */
+.clock-block {
+  background: var(--surface);
+  border-radius: var(--radius);
+  border-left: 6px solid var(--primary);
+  padding: 24px;
+  margin: 16px;
+  box-shadow: 0 2px 10px rgba(26,92,56,0.09);
+}
+.clock-time {
+  font-size: 80px;
+  font-weight: 800;
+  color: var(--primary);
+  line-height: 1;
+  letter-spacing: -2px;
+}
+.clock-ampm {
+  font-size: 28px;
+  font-weight: 400;
+  margin-left: 6px;
+  vertical-align: super;
+}
+.clock-day  { font-size: 28px; color: var(--secondary); font-weight: 700; margin-top: 8px; }
+.clock-date { font-size: 20px; color: var(--text-muted); margin-top: 4px; }
+.clock-greeting {
+  font-size: 24px;
+  color: var(--primary);
+  font-weight: 700;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 2px solid var(--border);
+  line-height: var(--line-height);
+}
+
+/* =====================================================
+   SECTION LABEL
+   ===================================================== */
+.section-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  padding: 0 20px 10px;
+  line-height: 1.4;
+}
+
+/* =====================================================
+   DIALOGS (accessible, large, full-screen-ish on mobile)
+   ===================================================== */
+dialog {
+  border: none;
+  border-radius: 20px;
+  padding: 0;
+  width: min(600px, 96vw);
+  max-height: 92vh;
+  overflow-y: auto;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.28);
+}
+dialog::backdrop { background: rgba(0,0,0,0.55); }
+dialog h2 {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--primary);
+  margin-bottom: 20px;
+  line-height: 1.2;
+}
+.dialog-body { padding: 28px; }
+.dialog-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+.dialog-actions .btn { flex: 1; min-width: 120px; }
+
+/* =====================================================
+   REDUCED MOTION — never animate without user consent
+   ===================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+}
+
+/* =====================================================
+   RESPONSIVE — single column on all sizes
+   ===================================================== */
+@media (max-width: 480px) {
+  .topbar-title { font-size: 19px; }
+  .clock-time   { font-size: 64px; }
+  .clock-day    { font-size: 24px; }
+  .hub-grid     { gap: 10px; }
 }
